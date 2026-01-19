@@ -1,0 +1,31 @@
+{
+  "name": "next-offline",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanford/next-offline.git"
+  },
+  "scripts": {
+    "test": "yarn run --cwd=packages/tests test",
+    "bootstrap": "yarn && npx lerna bootstrap"
+  },
+  "bugs": "https://github.com/hanford/next-offline/issues",
+  "authors": [
+    "Jack Hanford"
+  ],
+  "devDependencies": {
+    "husky": "^3.0.9",
+    "lerna": "^3.16.4",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
