@@ -1,0 +1,304 @@
+{
+  "timestamp": "2026-01-06T18:57:20.185724",
+  "suite": "all",
+  "results": {
+    "API Tests": {
+      "tests_run": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "timestamp": "2026-01-06T18:57:16.477028"
+    },
+    "CLI Tests": {
+      "tests_run": 21,
+      "failures": 0,
+      "errors": 3,
+      "skipped": 2,
+      "success": false,
+      "timestamp": "2026-01-06T18:57:16.505545"
+    },
+    "E2E CI Tests": {
+      "tests_run": 29,
+      "failures": 9,
+      "errors": 0,
+      "skipped": 0,
+      "success": false,
+      "timestamp": "2026-01-06T18:57:16.769934"
+    },
+    "Unit Tests": {
+      "tests_run": 32,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "success": false,
+      "timestamp": "2026-01-06T18:57:20.163045"
+    },
+    "Release Validation": {
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "details": {
+        "validation": {
+          "valid": true,
+          "issues": []
+        },
+        "build_results": {
+          "config": {
+            "version": "1.0.0",
+            "build_type": "release",
+            "timestamp": "2026-01-06T18:57:20.167540"
+          },
+          "repositories": {
+            "cogplan9": {
+              "name": "cogplan9",
+              "success": true,
+              "artifacts": [
+                "sys/src/libatomspace/*.a",
+                "sys/src/libpln/*.a",
+                "sys/src/libplan9cog/*.a",
+                "sys/src/cmd/cogctl/cogctl",
+                "sys/src/cmd/cogfs/cogfs"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "cogplan9",
+                "version": "1.0.0",
+                "commit": "0233f318b15b05d3f88b07957c0dff5b6cd2b520",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.170610",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "plan9"
+              }
+            },
+            "cogpilot.jl": {
+              "name": "cogpilot.jl",
+              "success": true,
+              "artifacts": [
+                "src/**/*.jl",
+                "Project.toml",
+                "Manifest.toml"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "cogpilot.jl",
+                "version": "1.0.0",
+                "commit": "72e02e4b785e075b9debc13a8707fbb16f8e56e9",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.174874",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "julia"
+              }
+            },
+            "cognu-mach": {
+              "name": "cognu-mach",
+              "success": true,
+              "artifacts": [
+                "gnumach",
+                "gnumach.gz",
+                "*.a"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "cognu-mach",
+                "version": "1.0.0",
+                "commit": "54e9a0d737ff38cb5f5860f9795b316db09e3952",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.178542",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-i686"
+                ],
+                "build_system": "autotools"
+              }
+            },
+            "coglux": {
+              "name": "coglux",
+              "success": true,
+              "artifacts": [
+                "vmlinux",
+                "arch/*/boot/bzImage",
+                "arch/*/boot/Image"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "coglux",
+                "version": "1.0.0",
+                "commit": "06fefb2df1d22d278bd4ed5720221a898f769de8",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.180549",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "make"
+              }
+            },
+            "coglow": {
+              "name": "coglow",
+              "success": true,
+              "artifacts": [
+                "build/bin/*",
+                "build/lib/*"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "coglow",
+                "version": "1.0.0",
+                "commit": "6e887b7615e7c0ef71c67989bb4acf42bff47c6f",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.182990",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "cmake"
+              }
+            },
+            "coggml": {
+              "name": "coggml",
+              "success": true,
+              "artifacts": [
+                "build/bin/*",
+                "build/lib/*",
+                "build/libggml.*"
+              ],
+              "errors": [],
+              "version_info": {
+                "name": "coggml",
+                "version": "1.0.0",
+                "commit": "eccd14074732421183f6418b9056fd9e8f7f72f8",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.185137",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64",
+                  "macos-x86_64",
+                  "macos-arm64",
+                  "windows-x86_64"
+                ],
+                "build_system": "cmake"
+              }
+            }
+          }
+        },
+        "manifest": {
+          "release_version": "1.0.0",
+          "build_timestamp": "2026-01-06T18:57:20.185207",
+          "zone_chan_client_id": "f5d9803e6e...",
+          "repositories": {
+            "cogplan9": {
+              "success": true,
+              "version_info": {
+                "name": "cogplan9",
+                "version": "1.0.0",
+                "commit": "0233f318b15b05d3f88b07957c0dff5b6cd2b520",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.170610",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "plan9"
+              },
+              "artifact_count": 5
+            },
+            "cogpilot.jl": {
+              "success": true,
+              "version_info": {
+                "name": "cogpilot.jl",
+                "version": "1.0.0",
+                "commit": "72e02e4b785e075b9debc13a8707fbb16f8e56e9",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.174874",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "julia"
+              },
+              "artifact_count": 3
+            },
+            "cognu-mach": {
+              "success": true,
+              "version_info": {
+                "name": "cognu-mach",
+                "version": "1.0.0",
+                "commit": "54e9a0d737ff38cb5f5860f9795b316db09e3952",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.178542",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-i686"
+                ],
+                "build_system": "autotools"
+              },
+              "artifact_count": 3
+            },
+            "coglux": {
+              "success": true,
+              "version_info": {
+                "name": "coglux",
+                "version": "1.0.0",
+                "commit": "06fefb2df1d22d278bd4ed5720221a898f769de8",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.180549",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "make"
+              },
+              "artifact_count": 3
+            },
+            "coglow": {
+              "success": true,
+              "version_info": {
+                "name": "coglow",
+                "version": "1.0.0",
+                "commit": "6e887b7615e7c0ef71c67989bb4acf42bff47c6f",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.182990",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "cmake"
+              },
+              "artifact_count": 2
+            },
+            "coggml": {
+              "success": true,
+              "version_info": {
+                "name": "coggml",
+                "version": "1.0.0",
+                "commit": "eccd14074732421183f6418b9056fd9e8f7f72f8",
+                "build_type": "release",
+                "timestamp": "2026-01-06T18:57:20.185137",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64",
+                  "macos-x86_64",
+                  "macos-arm64",
+                  "windows-x86_64"
+                ],
+                "build_system": "cmake"
+              },
+              "artifact_count": 3
+            }
+          },
+          "checksums": {}
+        }
+      }
+    }
+  },
+  "overall_success": false
+}

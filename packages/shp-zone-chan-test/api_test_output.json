@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-01-19T14:12:31.783952",
+  "suite": "api",
+  "results": {
+    "API Tests": {
+      "tests_run": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "timestamp": "2026-01-19T14:12:31.783778"
+    }
+  },
+  "overall_success": true
+}

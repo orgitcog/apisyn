@@ -1,0 +1,262 @@
+name: Zone Chan CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - api
+          - cli
+          - e2e
+          - unit
+          - release
+
+env:
+  SHP_ZONE_CHAN_APP_CLIENT_ID: ${{ secrets.SHP_ZONE_CHAN_APP_CLIENT_ID }}
+  SHP_ZONE_CHAN_APP_SECRET: ${{ secrets.SHP_ZONE_CHAN_APP_SECRET }}
+  SHOPIFY_PARTNER_CLIENT_API: ${{ secrets.SHOPIFY_PARTNER_CLIENT_API }}
+
+jobs:
+  # ============================================
+  # API Tests
+  # ============================================
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install requests pyyaml
+          
+      - name: Validate Zone Chan credentials
+        run: |
+          if [ -z "$SHP_ZONE_CHAN_APP_CLIENT_ID" ]; then
+            echo "::warning::Zone Chan Client ID not configured"
+          else
+            echo "Zone Chan Client ID: ${SHP_ZONE_CHAN_APP_CLIENT_ID:0:10}..."
+          fi
+          
+      - name: Run API tests
+        run: |
+          python3 api/test_zone_chan_api.py
+          
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: |
+            *.json
+            *.log
+          retention-days: 7
+
+  # ============================================
+  # CLI Tests
+  # ============================================
+  cli-tests:
+    name: CLI Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Clone test repositories
+        run: |
+          gh repo clone cogpy/cogplan9 /tmp/cogplan9 || echo "Clone failed"
+          gh repo clone cogpy/cogpilot.jl /tmp/cogpilot.jl || echo "Clone failed"
+          gh repo clone cogpy/cognu-mach /tmp/cognu-mach || echo "Clone failed"
+          gh repo clone cogpy/coggml /tmp/coggml || echo "Clone failed"
+          gh repo clone cogpy/coglow /tmp/coglow || echo "Clone failed"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Run CLI tests
+        run: |
+          python3 cli/test_cli.py
+          
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-test-results
+          path: |
+            *.json
+            *.log
+          retention-days: 7
+
+  # ============================================
+  # E2E CI Tests
+  # ============================================
+  e2e-tests:
+    name: E2E CI Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+          
+      - name: Clone test repositories
+        run: |
+          gh repo clone cogpy/cogplan9 /tmp/cogplan9 || echo "Clone failed"
+          gh repo clone cogpy/cogpilot.jl /tmp/cogpilot.jl || echo "Clone failed"
+          gh repo clone cogpy/cognu-mach /tmp/cognu-mach || echo "Clone failed"
+          gh repo clone cogpy/coggml /tmp/coggml || echo "Clone failed"
+          gh repo clone cogpy/coglow /tmp/coglow || echo "Clone failed"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Run E2E CI tests
+        run: |
+          python3 e2e/test_e2e_ci.py
+          
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-results
+          path: |
+            *.json
+            *.log
+          retention-days: 7
+
+  # ============================================
+  # Unit Tests
+  # ============================================
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Clone test repositories
+        run: |
+          gh repo clone cogpy/cogplan9 /tmp/cogplan9 || echo "Clone failed"
+          gh repo clone cogpy/cogpilot.jl /tmp/cogpilot.jl || echo "Clone failed"
+          gh repo clone cogpy/cognu-mach /tmp/cognu-mach || echo "Clone failed"
+          gh repo clone cogpy/coggml /tmp/coggml || echo "Clone failed"
+          gh repo clone cogpy/coglow /tmp/coglow || echo "Clone failed"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Run unit tests
+        run: |
+          python3 unit/test_unit.py
+          
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          path: |
+            *.json
+            *.log
+          retention-days: 7
+
+  # ============================================
+  # Release Build Validation
+  # ============================================
+  release-validation:
+    name: Release Build Validation
+    runs-on: ubuntu-latest
+    needs: [api-tests, cli-tests, e2e-tests, unit-tests]
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Clone test repositories
+        run: |
+          gh repo clone cogpy/cogplan9 /tmp/cogplan9 || echo "Clone failed"
+          gh repo clone cogpy/cogpilot.jl /tmp/cogpilot.jl || echo "Clone failed"
+          gh repo clone cogpy/cognu-mach /tmp/cognu-mach || echo "Clone failed"
+          gh repo clone cogpy/coggml /tmp/coggml || echo "Clone failed"
+          gh repo clone cogpy/coglow /tmp/coglow || echo "Clone failed"
+          gh repo clone cogpy/coglux /tmp/coglux || echo "Clone failed"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Run release validation
+        run: |
+          python3 release/release_config.py
+          
+      - name: Upload release manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-manifest
+          path: |
+            release/output/*.json
+          retention-days: 30
+
+  # ============================================
+  # Comprehensive Test Summary
+  # ============================================
+  test-summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [api-tests, cli-tests, e2e-tests, unit-tests, release-validation]
+    if: always()
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        
+      - name: Generate summary
+        run: |
+          echo "## Zone Chan Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Suite | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| API Tests | ${{ needs.api-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| CLI Tests | ${{ needs.cli-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| E2E CI Tests | ${{ needs.e2e-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit Tests | ${{ needs.unit-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release Validation | ${{ needs.release-validation.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Zone Chan Credentials" >> $GITHUB_STEP_SUMMARY
+          echo "- Client ID: ${{ env.SHP_ZONE_CHAN_APP_CLIENT_ID && 'Configured' || 'Not configured' }}" >> $GITHUB_STEP_SUMMARY

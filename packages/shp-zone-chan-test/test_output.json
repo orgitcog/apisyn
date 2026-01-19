@@ -1,0 +1,298 @@
+{
+  "timestamp": "2026-01-19T14:12:20.013292",
+  "suite": "all",
+  "results": {
+    "API Tests": {
+      "tests_run": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true,
+      "timestamp": "2026-01-19T14:12:19.919663"
+    },
+    "CLI Tests": {
+      "tests_run": 21,
+      "failures": 14,
+      "errors": 4,
+      "skipped": 2,
+      "success": false,
+      "timestamp": "2026-01-19T14:12:19.933119"
+    },
+    "E2E CI Tests": {
+      "tests_run": 29,
+      "failures": 14,
+      "errors": 12,
+      "skipped": 0,
+      "success": false,
+      "timestamp": "2026-01-19T14:12:19.996399"
+    },
+    "Unit Tests": {
+      "tests_run": 32,
+      "failures": 29,
+      "errors": 1,
+      "skipped": 0,
+      "success": false,
+      "timestamp": "2026-01-19T14:12:20.006684"
+    },
+    "Release Validation": {
+      "tests_run": 6,
+      "failures": 6,
+      "errors": 0,
+      "skipped": 0,
+      "success": false,
+      "details": {
+        "validation": {
+          "valid": false,
+          "issues": [
+            "Repository not found: cogplan9 at /home/ubuntu/cogplan9",
+            "Repository not found: cogpilot.jl at /home/ubuntu/cogpilot.jl",
+            "Repository not found: cognu-mach at /home/ubuntu/cognu-mach",
+            "Repository not found: coglux at /home/ubuntu/coglux",
+            "Repository not found: coglow at /home/ubuntu/coglow",
+            "Repository not found: coggml at /home/ubuntu/coggml"
+          ]
+        },
+        "build_results": {
+          "config": {
+            "version": "1.0.0",
+            "build_type": "release",
+            "timestamp": "2026-01-19T14:12:20.010181"
+          },
+          "repositories": {
+            "cogplan9": {
+              "name": "cogplan9",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/cogplan9"
+              ],
+              "version_info": {
+                "name": "cogplan9",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.010707",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "plan9"
+              }
+            },
+            "cogpilot.jl": {
+              "name": "cogpilot.jl",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/cogpilot.jl"
+              ],
+              "version_info": {
+                "name": "cogpilot.jl",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011084",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "julia"
+              }
+            },
+            "cognu-mach": {
+              "name": "cognu-mach",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/cognu-mach"
+              ],
+              "version_info": {
+                "name": "cognu-mach",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011465",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-i686"
+                ],
+                "build_system": "autotools"
+              }
+            },
+            "coglux": {
+              "name": "coglux",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/coglux"
+              ],
+              "version_info": {
+                "name": "coglux",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011769",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "make"
+              }
+            },
+            "coglow": {
+              "name": "coglow",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/coglow"
+              ],
+              "version_info": {
+                "name": "coglow",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.012101",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "cmake"
+              }
+            },
+            "coggml": {
+              "name": "coggml",
+              "success": false,
+              "artifacts": [],
+              "errors": [
+                "Repository path not found: /home/ubuntu/coggml"
+              ],
+              "version_info": {
+                "name": "coggml",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.012372",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64",
+                  "macos-x86_64",
+                  "macos-arm64",
+                  "windows-x86_64"
+                ],
+                "build_system": "cmake"
+              }
+            }
+          }
+        },
+        "manifest": {
+          "release_version": "1.0.0",
+          "build_timestamp": "2026-01-19T14:12:20.012428",
+          "zone_chan_client_id": "f5d9803e6e...",
+          "repositories": {
+            "cogplan9": {
+              "success": false,
+              "version_info": {
+                "name": "cogplan9",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.010707",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "plan9"
+              },
+              "artifact_count": 0
+            },
+            "cogpilot.jl": {
+              "success": false,
+              "version_info": {
+                "name": "cogpilot.jl",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011084",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "julia"
+              },
+              "artifact_count": 0
+            },
+            "cognu-mach": {
+              "success": false,
+              "version_info": {
+                "name": "cognu-mach",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011465",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-i686"
+                ],
+                "build_system": "autotools"
+              },
+              "artifact_count": 0
+            },
+            "coglux": {
+              "success": false,
+              "version_info": {
+                "name": "coglux",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.011769",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64"
+                ],
+                "build_system": "make"
+              },
+              "artifact_count": 0
+            },
+            "coglow": {
+              "success": false,
+              "version_info": {
+                "name": "coglow",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.012101",
+                "targets": [
+                  "linux-x86_64",
+                  "macos-arm64"
+                ],
+                "build_system": "cmake"
+              },
+              "artifact_count": 0
+            },
+            "coggml": {
+              "success": false,
+              "version_info": {
+                "name": "coggml",
+                "version": "1.0.0",
+                "commit": "unknown",
+                "build_type": "release",
+                "timestamp": "2026-01-19T14:12:20.012372",
+                "targets": [
+                  "linux-x86_64",
+                  "linux-arm64",
+                  "macos-x86_64",
+                  "macos-arm64",
+                  "windows-x86_64"
+                ],
+                "build_system": "cmake"
+              },
+              "artifact_count": 0
+            }
+          },
+          "checksums": {}
+        }
+      }
+    }
+  },
+  "overall_success": false
+}
