@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-01-19T14:17:10.149940",
+  "overall": {
+    "total_tests": 43,
+    "passed": 42,
+    "failed": 1,
+    "skipped": 0,
+    "errors": 0,
+    "success_rate": 97.7
+  },
+  "api_tests": {
+    "shopify_partner": {
+      "status": "passed",
+      "tests": 4
+    },
+    "shopify_admin": {
+      "status": "passed",
+      "tests": 9
+    },
+    "shopify_storefront": {
+      "status": "passed",
+      "tests": 3
+    },
+    "zone_chan": {
+      "status": "passed",
+      "tests": 2
+    }
+  },
+  "mcp_servers": {
+    "stripe": {
+      "status": "connected",
+      "tools": 15
+    },
+    "paypal": {
+      "status": "connected",
+      "tools": 5
+    },
+    "notion": {
+      "status": "connected",
+      "tools": 14
+    },
+    "cloudflare": {
+      "status": "connected",
+      "tools": 25
+    }
+  },
+  "packages": [
+    {
+      "name": "js-sdk",
+      "status": "PASSED",
+      "description": "UCP JavaScript SDK"
+    },
+    {
+      "name": "adk-js",
+      "status": "PASSED",
+      "description": "Agent Development Kit for TypeScript"
+    },
+    {
+      "name": "workbox-7",
+      "status": "PASSED",
+      "description": "Service Worker toolkit"
+    },
+    {
+      "name": "next-offline",
+      "status": "PASSED",
+      "description": "Next.js offline support"
+    },
+    {
+      "name": "ucp",
+      "status": "PASSED",
+      "description": "Universal Commerce Protocol"
+    },
+    {
+      "name": "shopify-enterprise-dash",
+      "status": "PASSED",
+      "description": "Shopify Enterprise Dashboard (Remix)"
+    },
+    {
+      "name": "shopify-marketplace-remix-app",
+      "status": "PASSED",
+      "description": "Shopify Marketplace Remix App"
+    },
+    {
+      "name": "appqbeast",
+      "status": "FAILED",
+      "description": "QuickBooks Beast App"
+    }
+  ],
+  "test_suites": [
+    {
+      "name": "API Integration Tests",
+      "category": "API",
+      "passed": 5,
+      "total": 5
+    },
+    {
+      "name": "CLI MCP Integration Tests",
+      "category": "CLI",
+      "passed": 4,
+      "total": 4
+    },
+    {
+      "name": "E2E CI Tests",
+      "category": "E2E",
+      "passed": 2,
+      "total": 2
+    },
+    {
+      "name": "Package Unit Tests",
+      "category": "UNIT",
+      "passed": 9,
+      "total": 10
+    },
+    {
+      "name": "Release Build Validation",
+      "category": "RELEASE",
+      "passed": 4,
+      "total": 4
+    }
+  ]
+}

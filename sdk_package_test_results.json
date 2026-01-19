@@ -1,0 +1,529 @@
+{
+  "timestamp": "2026-01-19T14:11:56.598987",
+  "summary": {
+    "total": 8,
+    "passed": 7,
+    "failed": 1,
+    "skipped": 0,
+    "errors": 0
+  },
+  "packages": [
+    {
+      "name": "js-sdk",
+      "description": "UCP JavaScript SDK",
+      "path": "/home/ubuntu/api-integration-tests/js-sdk-main/js-sdk-main",
+      "status": "PASSED",
+      "duration": 0.0003273487091064453,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            "LICENSE",
+            "README.md",
+            "SECURITY.md",
+            "generate_models.sh",
+            "index.ts",
+            "package-lock.json",
+            "package.json",
+            "tsconfig.cjs.json",
+            "tsconfig.esm.json",
+            "tsconfig.json",
+            "tsconfig.types.json"
+          ],
+          "has_readme": true,
+          "has_license": true,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "@ucp-js/sdk",
+          "version": "0.1.0",
+          "description": "UCP SDK for JavaScript",
+          "dependencies_count": 1,
+          "devDependencies_count": 2,
+          "scripts": [
+            "build",
+            "build:cjs",
+            "build:esm",
+            "build:types",
+            "build:noEmit",
+            "generate",
+            "prepublishOnly"
+          ],
+          "has_build": true,
+          "has_test": false,
+          "has_lint": false,
+          "main": "./dist/cjs/index.js",
+          "type": "commonjs"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": true,
+          "config": "ES2020"
+        },
+        "test_frameworks": {
+          "vitest": false,
+          "jest": false,
+          "playwright": false
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "adk-js",
+      "description": "Agent Development Kit for TypeScript",
+      "path": "/home/ubuntu/api-integration-tests/adk-js-main/adk-js-main",
+      "status": "PASSED",
+      "duration": 0.00017523765563964844,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".editorconfig",
+            ".gitignore",
+            ".prettierrc.js",
+            "CONTRIBUTING.md",
+            "LICENSE",
+            "README.md",
+            "eslint.config.js",
+            "package-lock.json",
+            "package.json",
+            "tsconfig.json",
+            "vitest.config.ts"
+          ],
+          "has_readme": true,
+          "has_license": true,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "adk",
+          "version": "0.2.4",
+          "description": "Google ADK JS",
+          "dependencies_count": 0,
+          "devDependencies_count": 12,
+          "scripts": [
+            "build",
+            "clean",
+            "clean:all",
+            "lint",
+            "lint:fix",
+            "format",
+            "test"
+          ],
+          "has_build": true,
+          "has_test": true,
+          "has_lint": true,
+          "main": "",
+          "type": "module"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": true,
+          "config": "ES2020"
+        },
+        "test_frameworks": {
+          "vitest": true,
+          "jest": false,
+          "playwright": false
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "workbox-7",
+      "description": "Service Worker toolkit",
+      "path": "/home/ubuntu/api-integration-tests/workbox-7/workbox-7",
+      "status": "PASSED",
+      "duration": 0.0002562999725341797,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".gitattributes",
+            ".gitignore",
+            ".ncurc.js",
+            ".nvmrc",
+            ".prettierignore",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md",
+            "LICENSE",
+            "README.md",
+            "cdn-details.json",
+            "gulpfile.js",
+            "javascript.eslintrc.js",
+            "jsdoc.conf",
+            "lerna.json",
+            "package-lock.json",
+            "package.json",
+            "prettier.config.js",
+            "tsconfig.json",
+            "typescript.eslintrc.js"
+          ],
+          "has_readme": true,
+          "has_license": true,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "workbox",
+          "version": "",
+          "description": "Top-level scripts and dependencies for the workbox monorepo. Not meant to be published to npm.",
+          "dependencies_count": 0,
+          "devDependencies_count": 82,
+          "scripts": [
+            "build",
+            "gulp",
+            "lint",
+            "lint-staged",
+            "prepare",
+            "prettier",
+            "test_integration",
+            "test_node",
+            "test_server",
+            "version"
+          ],
+          "has_build": true,
+          "has_test": false,
+          "has_lint": true,
+          "main": "",
+          "type": "commonjs"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": true,
+          "config": "es2017"
+        },
+        "test_frameworks": {
+          "vitest": false,
+          "jest": false,
+          "playwright": false
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "next-offline",
+      "description": "Next.js offline support",
+      "path": "/home/ubuntu/api-integration-tests/next-offline-master/next-offline-master",
+      "status": "PASSED",
+      "duration": 0.00011897087097167969,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".gitignore",
+            ".prettierrc.json",
+            "CHANGELOG.md",
+            "lerna.json",
+            "package.json",
+            "readme.md",
+            "yarn.lock"
+          ],
+          "has_readme": true,
+          "has_license": false,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "next-offline",
+          "version": "unknown",
+          "description": "",
+          "dependencies_count": 0,
+          "devDependencies_count": 4,
+          "scripts": [
+            "test",
+            "bootstrap"
+          ],
+          "has_build": false,
+          "has_test": true,
+          "has_lint": false,
+          "main": "",
+          "type": "commonjs"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": false
+        },
+        "test_frameworks": {
+          "vitest": false,
+          "jest": false,
+          "playwright": false
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "ucp",
+      "description": "Universal Commerce Protocol",
+      "path": "/home/ubuntu/api-integration-tests/ucp-main/ucp-main",
+      "status": "PASSED",
+      "duration": 0.010073184967041016,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".cspell.json",
+            ".gitignore",
+            ".pre-commit-config.yaml",
+            ".prettierrc",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md",
+            "GOVERNANCE.md",
+            "LICENSE",
+            "MAINTAINERS.md",
+            "README.md",
+            "SECURITY.md",
+            "biome.json",
+            "generate_schemas.py",
+            "generate_ts_schema_types.js",
+            "hooks.py",
+            "main.py",
+            "mkdocs.yml",
+            "package-lock.json",
+            "package.json",
+            "pyproject.toml",
+            "requirements-docs.txt",
+            "schema_utils.py",
+            "validate_specs.py"
+          ],
+          "has_readme": true,
+          "has_license": true,
+          "has_config": true
+        },
+        "pyproject": {
+          "name": "unknown",
+          "version": "unknown",
+          "description": "",
+          "dependencies_count": 0,
+          "python_requires": "",
+          "has_scripts": false
+        },
+        "python_files": [
+          "generate_schemas.py",
+          "hooks.py",
+          "main.py",
+          "schema_utils.py",
+          "validate_specs.py"
+        ],
+        "spec_files": 81
+      },
+      "error": ""
+    },
+    {
+      "name": "shopify-enterprise-dash",
+      "description": "Shopify Enterprise Dashboard (Remix)",
+      "path": "/home/ubuntu/api-integration-tests/shopify-enterprise-dash-main/shopify-enterprise-dash-main",
+      "status": "PASSED",
+      "duration": 0.0004334449768066406,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".dockerignore",
+            ".env.example",
+            ".gitignore",
+            ".releaserc.json",
+            ".yarnrc.yml",
+            "CHANGELOG.md",
+            "CLAUDE.md",
+            "Dockerfile",
+            "IMPLEMENTATION_SUMMARY.md",
+            "README.md",
+            "docker-compose.yml",
+            "eslint.config.js",
+            "index.html",
+            "package.json",
+            "playwright.config.ts",
+            "postcss.config.js",
+            "remix.config.js",
+            "tailwind.config.js",
+            "tsconfig.app.json",
+            "tsconfig.json",
+            "tsconfig.node.json",
+            "tsconfig.test.json",
+            "vite.config.ts",
+            "vitest.config.ts",
+            "yarn.lock"
+          ],
+          "has_readme": true,
+          "has_license": false,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "shopify-enterprise-dashboard",
+          "version": "1.0.0",
+          "description": "",
+          "dependencies_count": 36,
+          "devDependencies_count": 32,
+          "scripts": [
+            "dev",
+            "build",
+            "build:production",
+            "start",
+            "typecheck",
+            "lint",
+            "lint:fix",
+            "format",
+            "format:check",
+            "test",
+            "test:watch",
+            "test:coverage",
+            "test:ui",
+            "test:e2e",
+            "test:e2e:ui",
+            "test:e2e:headed",
+            "test:e2e:report",
+            "test:all",
+            "clean",
+            "postinstall",
+            "prevent-npm",
+            "release",
+            "prepare"
+          ],
+          "has_build": true,
+          "has_test": true,
+          "has_lint": true,
+          "main": "",
+          "type": "module"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": true,
+          "config": "unknown"
+        },
+        "test_frameworks": {
+          "vitest": true,
+          "jest": false,
+          "playwright": true
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "shopify-marketplace-remix-app",
+      "description": "Shopify Marketplace Remix App",
+      "path": "/home/ubuntu/api-integration-tests/shopify-marketplace-remix-app-main/shopify-marketplace-remix-app-main",
+      "status": "PASSED",
+      "duration": 0.000324249267578125,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".dockerignore",
+            ".editorconfig",
+            ".eslintignore",
+            ".eslintrc.cjs",
+            ".gitignore",
+            ".graphqlrc.ts",
+            ".npmrc",
+            ".prettierignore",
+            "CHANGELOG.md",
+            "CLAUDE.md",
+            "Dockerfile",
+            "IMPLEMENTATION.md",
+            "IMPLEMENTATION_SUMMARY.md",
+            "ORGIMA.md",
+            "PACKAGES.md",
+            "PACKAGE_IMPLEMENTATION.md",
+            "README.md",
+            "TESTING.md",
+            "env.d.ts",
+            "package.json",
+            "playwright.config.ts",
+            "shopify.app.toml",
+            "shopify.web.toml",
+            "tsconfig.json",
+            "vite.config.ts",
+            "vitest.config.ts"
+          ],
+          "has_readme": true,
+          "has_license": false,
+          "has_config": true
+        },
+        "package_json": {
+          "name": "app",
+          "version": "unknown",
+          "description": "",
+          "dependencies_count": 16,
+          "devDependencies_count": 15,
+          "scripts": [
+            "build",
+            "build:package",
+            "dev",
+            "config:link",
+            "generate",
+            "deploy",
+            "config:use",
+            "env",
+            "start",
+            "docker-start",
+            "setup",
+            "lint",
+            "test",
+            "test:watch",
+            "test:coverage",
+            "test:all",
+            "test:package",
+            "test:admin-app",
+            "test:e2e",
+            "test:e2e:ui",
+            "test:e2e:headed",
+            "shopify",
+            "prisma",
+            "graphql-codegen",
+            "vite"
+          ],
+          "has_build": true,
+          "has_test": true,
+          "has_lint": true,
+          "main": "",
+          "type": "module"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": true,
+          "config": "ES2022"
+        },
+        "test_frameworks": {
+          "vitest": true,
+          "jest": false,
+          "playwright": true
+        }
+      },
+      "error": ""
+    },
+    {
+      "name": "appqbeast",
+      "description": "QuickBooks Beast App",
+      "path": "/home/ubuntu/api-integration-tests/appqbeast-main/appqbeast-main",
+      "status": "FAILED",
+      "duration": 8.296966552734375e-05,
+      "details": {
+        "structure": {
+          "exists": true,
+          "files": [
+            ".gitignore",
+            "QUICKSTART.md",
+            "README.md",
+            "intuit_api_research.md",
+            "intuit_qbo_api_brief.md",
+            "intuit_qbo_demo.py"
+          ],
+          "has_readme": true,
+          "has_license": false,
+          "has_config": false
+        },
+        "package_json": {
+          "error": "package.json not found"
+        },
+        "npm_install": "Would need npm install",
+        "typescript": {
+          "present": false
+        },
+        "test_frameworks": {
+          "vitest": false,
+          "jest": false,
+          "playwright": false
+        }
+      },
+      "error": ""
+    }
+  ]
+}

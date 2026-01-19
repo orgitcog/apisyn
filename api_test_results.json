@@ -1,0 +1,316 @@
+{
+  "timestamp": "2026-01-19T14:10:40.032970",
+  "summary": {
+    "total_tests": 18,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "success_rate": 100.0
+  },
+  "suites": [
+    {
+      "name": "Shopify Partner API",
+      "total_tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 2.347710371017456,
+      "tests": [
+        {
+          "name": "Partner API - Get API Versions",
+          "status": "PASSED",
+          "duration": 1.134575605392456,
+          "message": "Test passed successfully",
+          "data": {
+            "versions_count": 6,
+            "versions": [
+              {
+                "handle": "2025-04",
+                "displayName": "2025-04",
+                "supported": true
+              },
+              {
+                "handle": "2025-07",
+                "displayName": "2025-07",
+                "supported": true
+              },
+              {
+                "handle": "2025-10",
+                "displayName": "2025-10",
+                "supported": true
+              },
+              {
+                "handle": "2026-01",
+                "displayName": "2026-01",
+                "supported": true
+              },
+              {
+                "handle": "2026-04",
+                "displayName": "2026-04 (Release candidate)",
+                "supported": false
+              }
+            ]
+          }
+        },
+        {
+          "name": "Partner API - Get Transactions",
+          "status": "PASSED",
+          "duration": 0.3798787593841553,
+          "message": "Test passed successfully",
+          "data": {
+            "transaction_count": 0,
+            "has_next_page": false
+          }
+        },
+        {
+          "name": "Partner API - Get Apps",
+          "status": "PASSED",
+          "duration": 0.44298291206359863,
+          "message": "Test passed successfully",
+          "data": {
+            "apps_count": 0,
+            "apps": []
+          }
+        },
+        {
+          "name": "Partner API - Get Organization",
+          "status": "PASSED",
+          "duration": 0.390214204788208,
+          "message": "Test passed successfully",
+          "data": {
+            "status_code": 200,
+            "response": {
+              "errors": [
+                {
+                  "message": "Field 'organization' doesn't exist on type 'QueryRoot'",
+                  "locations": [
+                    {
+                      "line": 3,
+                      "column": 13
+                    }
+                  ],
+                  "path": [
+                    "query GetOrganization",
+                    "organization"
+                  ],
+                  "extensions": {
+                    "code": "undefinedField",
+                    "typeName": "QueryRoot",
+                    "fieldName": "organization"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shopify Admin API",
+      "total_tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 7.793362617492676,
+      "tests": [
+        {
+          "name": "Admin API - Get Shop Info",
+          "status": "PASSED",
+          "duration": 1.4207587242126465,
+          "message": "Test passed successfully",
+          "data": {
+            "shop_name": "Zone-Testee",
+            "domain": "zone-teste.myshopify.com",
+            "currency": "ZAR",
+            "email": "org@regima.zone"
+          }
+        },
+        {
+          "name": "Admin API - Get Products",
+          "status": "PASSED",
+          "duration": 0.40523219108581543,
+          "message": "Test passed successfully",
+          "data": {
+            "product_count": 0,
+            "products": []
+          }
+        },
+        {
+          "name": "Admin API - Get Customers",
+          "status": "PASSED",
+          "duration": 0.3590705394744873,
+          "message": "Test passed successfully",
+          "data": {
+            "customer_count": 0,
+            "customers": []
+          }
+        },
+        {
+          "name": "Admin API - Get Orders",
+          "status": "PASSED",
+          "duration": 0.39167284965515137,
+          "message": "Test passed successfully",
+          "data": {
+            "order_count": 0,
+            "orders": []
+          }
+        },
+        {
+          "name": "Admin API - Get Collections",
+          "status": "PASSED",
+          "duration": 0.3839554786682129,
+          "message": "Test passed successfully",
+          "data": {
+            "collection_count": 1,
+            "collections": [
+              {
+                "id": 424720892141,
+                "title": "Home page"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Admin API - Get Inventory Locations",
+          "status": "PASSED",
+          "duration": 0.35887813568115234,
+          "message": "Test passed successfully",
+          "data": {
+            "location_count": 1,
+            "locations": [
+              {
+                "id": 75184308461,
+                "name": "Shop location"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Admin API - Get Webhooks",
+          "status": "PASSED",
+          "duration": 0.40538811683654785,
+          "message": "Test passed successfully",
+          "data": {
+            "webhook_count": 0,
+            "webhooks": []
+          }
+        },
+        {
+          "name": "Admin API - Get Access Scopes",
+          "status": "PASSED",
+          "duration": 1.0850541591644287,
+          "message": "Test passed successfully",
+          "data": {
+            "scope_count": 154,
+            "scopes": [
+              "read_analytics",
+              "read_apps",
+              "read_assigned_fulfillment_orders",
+              "read_customer_events",
+              "read_checkout_branding_settings",
+              "read_custom_pixels",
+              "read_customers",
+              "read_discounts",
+              "read_discovery",
+              "read_draft_orders"
+            ]
+          }
+        },
+        {
+          "name": "Admin API - Product CRUD Operations",
+          "status": "PASSED",
+          "duration": 2.9832377433776855,
+          "message": "Test passed successfully",
+          "data": {
+            "create": "success",
+            "read": "success",
+            "update": "success",
+            "delete": "success",
+            "product_id": 9248372883693
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shopify Storefront API",
+      "total_tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 1.8952109813690186,
+      "tests": [
+        {
+          "name": "Storefront API - Get Shop Info",
+          "status": "PASSED",
+          "duration": 1.0104248523712158,
+          "message": "Test passed successfully",
+          "data": {
+            "name": "Zone-Testee",
+            "description": null,
+            "domain": "https://zone-teste.myshopify.com"
+          }
+        },
+        {
+          "name": "Storefront API - Get Products",
+          "status": "PASSED",
+          "duration": 0.44393038749694824,
+          "message": "Test passed successfully",
+          "data": {
+            "product_count": 0,
+            "products": []
+          }
+        },
+        {
+          "name": "Storefront API - Get Collections",
+          "status": "PASSED",
+          "duration": 0.4408235549926758,
+          "message": "Test passed successfully",
+          "data": {
+            "collection_count": 1,
+            "collections": [
+              "Home page"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Zone Chan App",
+      "total_tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 5.7697296142578125e-05,
+      "tests": [
+        {
+          "name": "Zone Chan - Credentials Validation",
+          "status": "PASSED",
+          "duration": 2.384185791015625e-06,
+          "message": "Test passed successfully",
+          "data": {
+            "client_id_valid": true,
+            "client_secret_valid": true,
+            "client_id_length": 32,
+            "client_secret_length": 32
+          }
+        },
+        {
+          "name": "Zone Chan - HMAC Signature Generation",
+          "status": "PASSED",
+          "duration": 5.1021575927734375e-05,
+          "message": "Test passed successfully",
+          "data": {
+            "test_data": "test_payload_2026-01-19T14:10:40.032475",
+            "signature_length": 44,
+            "signature_valid": true
+          }
+        }
+      ]
+    }
+  ]
+}
