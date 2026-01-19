@@ -21,38 +21,24 @@ wheels/
 *.egg
 
 # Virtual environments
-.env
-.venv
-env/
 venv/
 ENV/
+env/
+.venv/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-*~
+
+# Environment variables
+.env
+.env.local
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Test outputs
+# Logs
 *.log
-
-# Credentials (never commit)
-.secrets
-*.pem
-*.key
-
-# Node modules
-node_modules/
-
-# Build artifacts
-*.zip
-
-# Keep important directories
-!packages/
-!reports/
-!test_framework/

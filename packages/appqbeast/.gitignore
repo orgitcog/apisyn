@@ -38,21 +38,26 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Test outputs
-*.log
-
-# Credentials (never commit)
-.secrets
+# Secrets and credentials
 *.pem
 *.key
+.env.local
+.env.*.local
+secrets.json
+credentials.json
 
-# Node modules
-node_modules/
+# Logs
+*.log
+logs/
 
-# Build artifacts
-*.zip
-
-# Keep important directories
-!packages/
-!reports/
-!test_framework/
+# Test coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/

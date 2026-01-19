@@ -1,0 +1,402 @@
+{
+  "api_versions": {
+    "data": {
+      "publicApiVersions": [
+        {
+          "handle": "2025-04",
+          "displayName": "2025-04",
+          "supported": true
+        },
+        {
+          "handle": "2025-07",
+          "displayName": "2025-07",
+          "supported": true
+        },
+        {
+          "handle": "2025-10",
+          "displayName": "2025-10",
+          "supported": true
+        },
+        {
+          "handle": "2026-01",
+          "displayName": "2026-01",
+          "supported": true
+        },
+        {
+          "handle": "2026-04",
+          "displayName": "2026-04 (Release candidate)",
+          "supported": false
+        },
+        {
+          "handle": "unstable",
+          "displayName": "Unstable",
+          "supported": false
+        }
+      ]
+    }
+  },
+  "query_root": {
+    "data": {
+      "__type": {
+        "name": "QueryRoot",
+        "fields": [
+          {
+            "name": "app",
+            "description": "A Shopify [app](/concepts/apps).",
+            "args": [
+              {
+                "name": "id",
+                "description": "The app ID. Example value: `gid://partners/App/1234`.",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "App",
+              "kind": "OBJECT",
+              "ofType": null
+            }
+          },
+          {
+            "name": "publicApiVersions",
+            "description": "The list of public Partner API versions, including supported, release candidate and unstable versions.",
+            "args": [],
+            "type": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": null
+              }
+            }
+          },
+          {
+            "name": "transaction",
+            "description": "A Shopify Partner transaction.",
+            "args": [
+              {
+                "name": "id",
+                "description": "The transaction ID. Example value: `gid://partners/ThemeSale/1234`.",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "Transaction",
+              "kind": "INTERFACE",
+              "ofType": null
+            }
+          },
+          {
+            "name": "transactions",
+            "description": "A list of the Partner organization's [transactions](https://help.shopify.com/partners/getting-started/getting-paid).",
+            "args": [
+              {
+                "name": "after",
+                "description": "Returns the elements in the list that come after the specified cursor.",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "description": "Returns the elements in the list that come before the specified cursor.",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "first",
+                "description": "Returns the first _n_ elements from the list.",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "description": "Returns the last _n_ elements from the list.",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "shopId",
+                "description": "Returns transactions associated with the specified shop ID.",
+                "type": {
+                  "name": "ID",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "myshopifyDomain",
+                "description": "Returns transactions associated with the specified `.myshopify.com` shop domain. Example value: `example.myshopify.com`.",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "appId",
+                "description": "Returns transactions associated with the specified app ID.",
+                "type": {
+                  "name": "ID",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "createdAtMin",
+                "description": "Returns transactions that were created on or after the specified date and time.",
+                "type": {
+                  "name": "DateTime",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "createdAtMax",
+                "description": "Returns transactions that were created on or before the specified date and time.",
+                "type": {
+                  "name": "DateTime",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "types",
+                "description": "Returns transactions of the specified types.",
+                "type": {
+                  "name": null,
+                  "kind": "LIST",
+                  "ofType": {
+                    "name": null
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": null,
+              "kind": "NON_NULL",
+              "ofType": {
+                "name": "TransactionConnection"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "transaction_types": {
+    "data": {
+      "__type": {
+        "name": "Transaction",
+        "kind": "INTERFACE",
+        "possibleTypes": [
+          {
+            "name": "AppOneTimeSale",
+            "description": "A transaction corresponding to a one-time app charge."
+          },
+          {
+            "name": "AppSaleAdjustment",
+            "description": "A transaction corresponding to a refund, downgrade, or adjustment of an app charge."
+          },
+          {
+            "name": "AppSaleCredit",
+            "description": "A transaction corresponding to an [app credit](/docs/admin-api/rest/reference/billing/applicationcredit)."
+          },
+          {
+            "name": "AppSubscriptionSale",
+            "description": "A transaction corresponding to an app subscription charge."
+          },
+          {
+            "name": "AppUsageSale",
+            "description": "A transaction corresponding to an app usage charge."
+          },
+          {
+            "name": "LegacyTransaction",
+            "description": "A transaction of a type that is no longer supported."
+          },
+          {
+            "name": "ReferralAdjustment",
+            "description": "A transaction corresponding to a shop referral adjustment."
+          },
+          {
+            "name": "ReferralTransaction",
+            "description": "A transaction corresponding to a shop referral."
+          },
+          {
+            "name": "ServiceSale",
+            "description": "A transaction corresponding to a paid invoice for a service."
+          },
+          {
+            "name": "ServiceSaleAdjustment",
+            "description": "A transaction corresponding to a refund, downgrade, or adjustment of a service sale."
+          },
+          {
+            "name": "TaxTransaction",
+            "description": "Tax transactions are not computed for pending transactions. Instead, they're rolled\nup as one transaction per payout. The type of tax and the way it's\ncomputed is dependent on the type of transaction.\n\nFor sale transactions, such as app subscriptions or theme purchases, Shopify charges\nthe Partner tax on the fee collected for brokering the transaction. The amount is\na negative number in this scenario.\n\nFor referral transactions, such as a development store transfer, Shopify pays the Partner\na commission. The tax represents any taxes on the referral commission that are payable to\nthe Partner. The amount is a positive number in this scenario."
+          },
+          {
+            "name": "ThemeSale",
+            "description": "A transaction corresponding to a theme purchase."
+          },
+          {
+            "name": "ThemeSaleAdjustment",
+            "description": "A transaction corresponding to a refund, downgrade, or adjustment of a theme sale."
+          }
+        ]
+      }
+    }
+  },
+  "app_schema": {
+    "data": {
+      "__type": {
+        "name": "App",
+        "fields": [
+          {
+            "name": "apiKey",
+            "description": "A unique application API identifier.",
+            "type": {
+              "name": null,
+              "kind": "NON_NULL"
+            }
+          },
+          {
+            "name": "events",
+            "description": "A list of app events.",
+            "type": {
+              "name": null,
+              "kind": "NON_NULL"
+            }
+          },
+          {
+            "name": "id",
+            "description": "The ID of the app. Example value: `gid://partners/App/1234`.",
+            "type": {
+              "name": null,
+              "kind": "NON_NULL"
+            }
+          },
+          {
+            "name": "name",
+            "description": "The name of the app.",
+            "type": {
+              "name": null,
+              "kind": "NON_NULL"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "transactions": {
+    "errors": [
+      {
+        "message": "Field 'netAmount' doesn't exist on type 'ReferralTransaction'",
+        "locations": [
+          {
+            "line": 82,
+            "column": 25
+          }
+        ],
+        "path": [
+          "query GetTransactions",
+          "transactions",
+          "edges",
+          "node",
+          "... on ReferralTransaction",
+          "netAmount"
+        ],
+        "extensions": {
+          "code": "undefinedField",
+          "typeName": "ReferralTransaction",
+          "fieldName": "netAmount"
+        }
+      }
+    ]
+  },
+  "app_subscription_transactions": {
+    "data": {
+      "transactions": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    }
+  },
+  "referral_transactions": {
+    "errors": [
+      {
+        "message": "Argument 'types' on Field 'transactions' has an invalid value ([REFERRAL_COMMISSION, REFERRAL_CREDIT]). Expected type '[TransactionType!]'.",
+        "locations": [
+          {
+            "line": 3,
+            "column": 9
+          }
+        ],
+        "path": [
+          "query GetReferralTransactions",
+          "transactions",
+          "types"
+        ],
+        "extensions": {
+          "code": "argumentLiteralsIncompatible",
+          "typeName": "Field",
+          "argumentName": "types"
+        }
+      },
+      {
+        "message": "Field 'netAmount' doesn't exist on type 'ReferralTransaction'",
+        "locations": [
+          {
+            "line": 14,
+            "column": 25
+          }
+        ],
+        "path": [
+          "query GetReferralTransactions",
+          "transactions",
+          "edges",
+          "node",
+          "... on ReferralTransaction",
+          "netAmount"
+        ],
+        "extensions": {
+          "code": "undefinedField",
+          "typeName": "ReferralTransaction",
+          "fieldName": "netAmount"
+        }
+      }
+    ]
+  },
+  "all_transaction_types": {
+    "data": {
+      "transactions": {
+        "edges": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,206 @@
+
+############################################################
+#                                                          #
+#                SHOPIFY ZONE TEST API DEMO                #
+#                                                          #
+############################################################
+
+============================================================
+SHOPIFY ZONE TEST API - CAPABILITIES SUMMARY
+============================================================
+
+╔══════════════════════════════════════════════════════════════╗
+║                    ADMIN API CAPABILITIES                     ║
+╠══════════════════════════════════════════════════════════════╣
+║ SHOP MANAGEMENT                                               ║
+║   • Get shop information (name, email, currency, timezone)    ║
+║   • View access scopes and permissions                        ║
+║   • Manage locations and fulfillment centers                  ║
+╠══════════════════════════════════════════════════════════════╣
+║ PRODUCT MANAGEMENT                                            ║
+║   • Create, read, update, delete products                     ║
+║   • Manage product variants (sizes, colors, etc.)             ║
+║   • Handle product images and media                           ║
+║   • Set product metafields for custom data                    ║
+║   • Manage inventory levels per location                      ║
+╠══════════════════════════════════════════════════════════════╣
+║ CUSTOMER MANAGEMENT                                           ║
+║   • Create, read, update, delete customers                    ║
+║   • Search customers by various criteria                      ║
+║   • Manage customer addresses                                 ║
+║   • Handle customer tags and notes                            ║
+╠══════════════════════════════════════════════════════════════╣
+║ ORDER MANAGEMENT                                              ║
+║   • Create, read, update orders                               ║
+║   • Close and cancel orders                                   ║
+║   • Manage draft orders                                       ║
+║   • Handle fulfillments and shipping                          ║
+║   • Process refunds and returns                               ║
+╠══════════════════════════════════════════════════════════════╣
+║ COLLECTION MANAGEMENT                                         ║
+║   • Create custom and smart collections                       ║
+║   • Add/remove products from collections                      ║
+║   • Manage collection rules and sorting                       ║
+╠══════════════════════════════════════════════════════════════╣
+║ INVENTORY MANAGEMENT                                          ║
+║   • Track inventory across multiple locations                 ║
+║   • Set and adjust inventory levels                           ║
+║   • Manage inventory items and SKUs                           ║
+╠══════════════════════════════════════════════════════════════╣
+║ DISCOUNTS & PRICING                                           ║
+║   • Create price rules and discount codes                     ║
+║   • Set percentage or fixed amount discounts                  ║
+║   • Configure usage limits and conditions                     ║
+╠══════════════════════════════════════════════════════════════╣
+║ WEBHOOKS & AUTOMATION                                         ║
+║   • Create webhooks for real-time notifications               ║
+║   • Subscribe to order, product, customer events              ║
+║   • Automate workflows based on store events                  ║
+╠══════════════════════════════════════════════════════════════╣
+║                  STOREFRONT API CAPABILITIES                  ║
+╠══════════════════════════════════════════════════════════════╣
+║ CUSTOMER-FACING OPERATIONS                                    ║
+║   • Browse products and collections (GraphQL)                 ║
+║   • Search products with filters                              ║
+║   • Create and manage shopping carts                          ║
+║   • Generate checkout URLs                                    ║
+║   • Access product availability and pricing                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+STORE DETAILS:
+  • Store URL: zone-teste.myshopify.com
+  • Country: South Africa
+  • Currency: ZAR (South African Rand)
+  • Plan: Developer Preview (Partner Test)
+  • API Version: 2024-01
+
+AUTHENTICATION:
+  • Admin API: X-Shopify-Access-Token header
+  • Storefront API: X-Shopify-Storefront-Access-Token header
+
+RATE LIMITS:
+  • Admin API: 2 requests/second (bucket of 40)
+  • Storefront API: 100 cost points/second
+
+AVAILABLE ACCESS SCOPES: 150+ scopes including:
+  • read/write_products, read/write_customers
+  • read/write_orders, read/write_inventory
+  • read/write_fulfillments, read/write_discounts
+  • read/write_draft_orders, read/write_themes
+  • And many more...
+
+
+============================================================
+SHOPIFY ADMIN API DEMONSTRATION
+============================================================
+
+--- Shop Information ---
+Store Name: Zone-Testee
+Email: org@regima.zone
+Domain: zone-teste.myshopify.com
+Currency: ZAR
+Country: South Africa
+Plan: Developer Preview
+
+--- Locations ---
+  - Shop location (ID: 75184308461)
+    Country: South Africa
+    Active: True
+
+--- Collections ---
+  - Home page (Handle: frontpage)
+
+--- Products ---
+Total Products: 0
+
+--- Customers ---
+Total Customers: 0
+
+--- Orders ---
+Total Orders: 0
+
+--- Webhooks ---
+  No webhooks configured
+
+--- Access Scopes (Sample) ---
+Total Scopes: 154
+Sample scopes:
+  - read_analytics
+  - read_apps
+  - read_assigned_fulfillment_orders
+  - read_customer_events
+  - read_checkout_branding_settings
+  - read_custom_pixels
+  - read_customers
+  - read_discounts
+  - read_discovery
+  - read_draft_orders
+  ...
+
+============================================================
+SHOPIFY STOREFRONT API DEMONSTRATION
+============================================================
+
+--- Shop Information (Storefront) ---
+Name: Zone-Testee
+Description: None
+Domain: https://zone-teste.myshopify.com
+Currency: ZAR
+
+--- Collections (Storefront) ---
+  - Home page (Handle: frontpage)
+
+--- Products (Storefront) ---
+  No products found
+
+--- Cart Creation (Demo) ---
+Cart ID: gid://shopify/Cart/hWN7nOjGfefv8x2Wq3zsq6vy?key=f7d2b00b866a43f067adc613f33a0abc
+Checkout URL: https://zone-teste.myshopify.com/cart/c/hWN7nOjGfefv8x2Wq3zsq6vy?key=f7d2b00b866a43f067adc613f33a0abc
+
+============================================================
+PRODUCT CRUD DEMONSTRATION
+============================================================
+
+--- Creating Test Product ---
+Created Product ID: 9248286998765
+Title: Demo Product - Zone Test
+Handle: demo-product-zone-test
+
+--- Updating Product ---
+Updated Title: Demo Product - Zone Test (Updated)
+
+--- Retrieving Product ---
+Retrieved: Demo Product - Zone Test (Updated)
+
+--- Deleting Product ---
+Product 9248286998765 deleted successfully
+
+============================================================
+CUSTOMER OPERATIONS DEMONSTRATION
+============================================================
+
+--- Creating Test Customer ---
+Created Customer ID: 9306651787501
+Name: Test Customer
+Email: test.customer.20260119123946@example.com
+
+--- Updating Customer ---
+Customer updated with note: Updated via API demo
+
+--- Searching Customers ---
+Found 0 customers matching 'test'
+
+--- Deleting Customer ---
+Customer 9306651787501 deleted successfully
+
+============================================================
+DEMO COMPLETE
+============================================================
+
+The demo script has demonstrated the key capabilities of
+the Shopify Zone Test API. You can use the ShopifyAdminAPI
+and ShopifyStorefrontAPI classes in your own applications.
+
+For more information, see:
+  • Admin API: https://shopify.dev/docs/api/admin-rest
+  • Storefront API: https://shopify.dev/docs/api/storefront
