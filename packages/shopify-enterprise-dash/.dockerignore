@@ -1,0 +1,53 @@
+# Dependencies
+node_modules
+.yarn/cache
+.yarn/unplugged
+.yarn/install-state.gz
+.pnp.*
+
+# Build output (we rebuild in Docker)
+build
+dist
+
+# Test files
+tests
+coverage
+playwright-report
+test-results
+
+# Development files
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Documentation
+*.md
+!README.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+Jenkinsfile
+
+# Misc
+*.tar.gz
+*.zip
