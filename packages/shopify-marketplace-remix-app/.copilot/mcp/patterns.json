@@ -1,0 +1,201 @@
+{
+  "name": "Shopify Patterns and Best Practices",
+  "description": "Common patterns, conventions, and best practices for Shopify marketplace development",
+  "remixPatterns": {
+    "routing": {
+      "convention": "File-based routing in app/routes/",
+      "patterns": {
+        "index": "app/routes/_index.tsx - Home page",
+        "nested": "app/routes/admin.products.tsx - /admin/products",
+        "dynamic": "app/routes/products.$id.tsx - /products/:id",
+        "layout": "app/routes/admin.tsx - Layout for admin routes"
+      }
+    },
+    "dataLoading": {
+      "loader": {
+        "purpose": "Server-side data fetching",
+        "example": "export async function loader({ request }) {\n  const { session } = await authenticate.admin(request);\n  const products = await shopify.rest.Product.all({ session });\n  return json({ products });\n}"
+      },
+      "useLoaderData": {
+        "purpose": "Access loader data in components",
+        "example": "const { products } = useLoaderData<typeof loader>();"
+      }
+    },
+    "mutations": {
+      "action": {
+        "purpose": "Handle form submissions and mutations",
+        "example": "export async function action({ request }) {\n  const { session } = await authenticate.admin(request);\n  const formData = await request.formData();\n  // Handle mutation\n  return redirect('/success');\n}"
+      },
+      "form": {
+        "usage": "Use Remix Form component for progressive enhancement",
+        "example": "<Form method='post'>\n  <Button submit>Save</Button>\n</Form>"
+      }
+    },
+    "errorHandling": {
+      "errorBoundary": {
+        "purpose": "Handle route-level errors",
+        "example": "export function ErrorBoundary() {\n  return <div>Something went wrong!</div>;\n}"
+      },
+      "catchBoundary": {
+        "purpose": "Handle thrown responses",
+        "usage": "For 404s and other HTTP errors"
+      }
+    }
+  },
+  "shopifyApiPatterns": {
+    "authentication": {
+      "embedded": {
+        "pattern": "authenticate.admin(request)",
+        "usage": "For embedded admin apps",
+        "returns": "{ admin, session, billing }"
+      },
+      "webhook": {
+        "pattern": "authenticate.webhook(request)",
+        "usage": "For webhook endpoints",
+        "validation": "HMAC verification included"
+      }
+    },
+    "graphql": {
+      "adminApi": {
+        "client": "admin.graphql(query, { variables })",
+        "example": "const response = await admin.graphql(`\n  query getProducts($first: Int!) {\n    products(first: $first) {\n      nodes { id title }\n    }\n  }\n`, { variables: { first: 10 } });"
+      },
+      "storefrontApi": {
+        "usage": "For customer-facing queries",
+        "authentication": "Storefront access tokens"
+      }
+    },
+    "rest": {
+      "usage": "shopify.rest.Resource.method({ session })",
+      "example": "const products = await shopify.rest.Product.all({ session });"
+    }
+  },
+  "polarisPatterns": {
+    "layout": {
+      "page": {
+        "component": "Page",
+        "props": ["title", "breadcrumbs", "primaryAction"],
+        "example": "<Page title='Products' primaryAction={{ content: 'Add product', url: '/products/new' }}>"
+      },
+      "appProvider": {
+        "purpose": "Provides theme and i18n context",
+        "required": "Wrap app in AppProvider"
+      }
+    },
+    "forms": {
+      "formLayout": "Use FormLayout for consistent spacing",
+      "textField": "TextField component for inputs", 
+      "button": "Button component with loading states",
+      "validation": "Use error prop for field-level errors"
+    },
+    "feedback": {
+      "toast": "Use useAppBridge for toast notifications",
+      "banner": "Banner component for page-level messages",
+      "modal": "Modal component for dialogs"
+    },
+    "navigation": {
+      "navigationMenu": "Navigation component for side navigation",
+      "topBar": "TopBar for app header",
+      "breadcrumbs": "Use Page breadcrumbs prop"
+    }
+  },
+  "appBridgePatterns": {
+    "setup": {
+      "provider": "Wrap app with AppBridgeProvider",
+      "config": "Pass API key and host",
+      "example": "<AppBridgeProvider config={{ apiKey, host }}>"
+    },
+    "hooks": {
+      "useAppBridge": "Access App Bridge instance",
+      "useAuthenticatedFetch": "Fetch with authentication headers",
+      "useNavigate": "Navigate within embedded app"
+    },
+    "actions": {
+      "toast": "Toast.create(app, { message, isError })",
+      "modal": "Modal.create(app, { title, content })",
+      "titleBar": "TitleBar.create(app, { title, buttons })"
+    }
+  },
+  "extensionPatterns": {
+    "structure": {
+      "directory": "extensions/{extension-name}/",
+      "config": "shopify.extension.toml",
+      "entry": "src/index.js or index.ts"
+    },
+    "types": {
+      "checkout": "Checkout UI extensions",
+      "admin": "Admin UI extensions", 
+      "pos": "Point of sale extensions"
+    },
+    "development": {
+      "build": "Automatic via Shopify CLI",
+      "preview": "shopify app dev includes extensions",
+      "deployment": "Part of app deployment"
+    }
+  },
+  "stateManagement": {
+    "remix": {
+      "server": "Use loaders and actions for server state",
+      "client": "React state hooks for client state",
+      "persistence": "Session or cookie storage"
+    },
+    "shopify": {
+      "sessionStorage": "Prisma session storage configured",
+      "appData": "Store app-specific data in session",
+      "billing": "Handle app billing state"
+    }
+  },
+  "performance": {
+    "caching": {
+      "remix": "Use headers for cache control",
+      "shopify": "Respect Shopify API rate limits",
+      "cdn": "Static assets via CDN"
+    },
+    "optimization": {
+      "codeSpitting": "Automatic with Remix",
+      "bundling": "Vite handles optimization",
+      "images": "Use Shopify image transformations"
+    }
+  },
+  "security": {
+    "authentication": {
+      "oauth": "Shopify OAuth flow handled by library",
+      "session": "Secure session storage",
+      "scopes": "Minimal required scopes"
+    },
+    "validation": {
+      "input": "Validate all user inputs",
+      "csrf": "CSRF protection built-in",
+      "webhooks": "HMAC verification"
+    }
+  },
+  "testing": {
+    "strategies": {
+      "unit": "Test utility functions and components",
+      "integration": "Test Shopify API interactions",
+      "e2e": "Test complete user workflows"
+    },
+    "mocking": {
+      "shopify": "Mock Shopify API responses",
+      "session": "Mock authentication state",
+      "webhooks": "Mock webhook payloads"
+    }
+  },
+  "commonMistakes": {
+    "authentication": [
+      "Forgetting to authenticate requests",
+      "Not handling session expiration",
+      "Missing required scopes"
+    ],
+    "routing": [
+      "Incorrect file naming conventions",
+      "Not using proper nested routes",
+      "Missing error boundaries"
+    ],
+    "performance": [
+      "Not implementing proper caching",
+      "Ignoring rate limits",
+      "Blocking render with heavy operations"
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "name": "Import External Apps into Monorepo",
+  "description": "One-time task to clone external repositories, strip their Git history, and place them into the monorepo under /apps/*.",
+  "tasks": [
+    {
+      "id": "clone_and_clean",
+      "name": "Clone and Detach Repositories",
+      "steps": [
+        {
+          "action": "clone",
+          "url": "https://github.com/Shopify/shopify-marketplaces-admin-app",
+          "destination": "temp/admin-app"
+        },
+        {
+          "action": "clone",
+          "url": "https://github.com/Shopify/shopify-marketplaces-buyer-app",
+          "destination": "temp/buyer-app"
+        },
+        {
+          "action": "clone",
+          "url": "https://github.com/alexandrosk/marketplace-app",
+          "destination": "temp/market-app"
+        },
+        {
+          "action": "remove_git_metadata",
+          "paths": [
+            "temp/admin-app/.git",
+            "temp/buyer-app/.git",
+            "temp/market-app/.git"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "restructure_and_move",
+      "name": "Move Cleaned Repos to Monorepo Structure",
+      "steps": [
+        {
+          "action": "move",
+          "from": "temp/admin-app",
+          "to": "apps/admin-app"
+        },
+        {
+          "action": "move",
+          "from": "temp/buyer-app",
+          "to": "apps/buyer-app"
+        },
+        {
+          "action": "move",
+          "from": "temp/market-app",
+          "to": "apps/market-app"
+        }
+      ]
+    },
+    {
+      "id": "document_dependencies",
+      "name": "Extract and Document App Dependencies",
+      "steps": [
+        {
+          "action": "extract_dependencies",
+          "from": [
+            "apps/admin-app/package.json",
+            "apps/buyer-app/package.json",
+            "apps/market-app/package.json"
+          ],
+          "to": "docs/integration/app-dependencies.md"
+        }
+      ]
+    },
+    {
+      "id": "prepare_branch",
+      "name": "Create Feature Branch for Review",
+      "steps": [
+        {
+          "action": "git_checkout",
+          "branch": "feature/initial-app-import"
+        },
+        {
+          "action": "git_add",
+          "paths": ["apps/"]
+        },
+        {
+          "action": "git_commit",
+          "message": "chore(monorepo): import external apps (no history)"
+        },
+        {
+          "action": "git_push",
+          "remote": "origin",
+          "branch": "feature/initial-app-import"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not preserve git history",
+    "Remove all .git and .gitmodules files",
+    "Maintain consistent folder structure under /apps/",
+    "Ensure no name collisions with existing folders"
+  ],
+  "outputs": [
+    "apps/admin-app/",
+    "apps/buyer-app/",
+    "apps/market-app/",
+    "docs/integration/app-dependencies.md",
+    "feature branch: feature/initial-app-import"
+  ]
+}

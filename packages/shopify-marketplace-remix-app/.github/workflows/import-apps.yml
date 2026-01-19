@@ -1,0 +1,74 @@
+name: Import External Apps into Monorepo
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_mcp:
+        description: "Run the MCP to import external apps"
+        required: true
+        default: "true"
+
+jobs:
+  run-mcp-import:
+    name: Run MCP Plan - Import Apps
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v6.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js (for parsing package.json, if needed)
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: '18'
+
+      - name: Install jq (for JSON parsing)
+        run: sudo apt-get install -y jq
+
+      - name: Run MCP Plan (import-apps)
+        run: |
+          echo "🔁 Starting MCP: import-apps"
+          MCP_FILE=".copilot/mcp/import-apps.json"
+
+          # Parse MCP and execute basic steps (mock implementation)
+          mkdir -p temp
+
+          # Clone repos
+          git clone https://github.com/Shopify/shopify-marketplaces-admin-app temp/admin-app
+          git clone https://github.com/Shopify/shopify-marketplaces-buyer-app temp/buyer-app
+          git clone https://github.com/alexandrosk/marketplace-app temp/market-app
+
+          # Remove .git metadata
+          rm -rf temp/*/.git
+
+          # Move to apps/
+          mkdir -p apps
+          mv temp/admin-app apps/admin-app
+          mv temp/buyer-app apps/buyer-app
+          mv temp/market-app apps/market-app
+
+          # Document dependencies
+          mkdir -p docs/integration
+          echo "# App Dependencies" > docs/integration/app-dependencies.md
+          for app in admin-app buyer-app market-app; do
+            echo "## $app" >> docs/integration/app-dependencies.md
+            if [ -f apps/$app/package.json ]; then
+              jq '.dependencies' apps/$app/package.json >> docs/integration/app-dependencies.md
+            else
+              echo "_No package.json found_" >> docs/integration/app-dependencies.md
+            fi
+          done
+
+      - name: Commit Imported Apps
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b feature/initial-app-import
+          git add apps/ docs/integration/app-dependencies.md
+          git commit -m "chore(monorepo): import external apps (no history)"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push origin feature/initial-app-import

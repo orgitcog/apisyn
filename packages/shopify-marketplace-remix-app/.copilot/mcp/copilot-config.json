@@ -1,0 +1,310 @@
+{
+  "mcpVersion": "1.0",
+  "name": "Shopify Marketplace Remix App - Copilot Configuration",
+  "description": "Comprehensive MCP configuration for optimal coding agent assistance in a Shopify marketplace monorepo with multiple applications",
+  "version": "1.0.0",
+  "repository": {
+    "type": "monorepo",
+    "structure": "shopify-marketplace-apps",
+    "primaryLanguages": ["TypeScript", "JavaScript", "GraphQL"],
+    "frameworks": ["Remix", "React", "Next.js", "Vite", "Webpack"]
+  },
+  "contextualInformation": {
+    "projectType": "Shopify Marketplace Application Suite",
+    "architecture": "Monorepo with multiple applications",
+    "businessDomain": "E-commerce marketplace connecting merchants and buyers through Shopify ecosystem",
+    "keyPatterns": [
+      "Shopify App Bridge integration",
+      "Remix full-stack architecture", 
+      "GraphQL API integration",
+      "Prisma ORM data layer",
+      "Multi-app coordination"
+    ]
+  },
+  "applications": {
+    "root": {
+      "name": "Main Marketplace App",
+      "path": "/",
+      "type": "remix-app",
+      "description": "Primary Remix application for marketplace functionality",
+      "techStack": {
+        "framework": "Remix",
+        "language": "TypeScript",
+        "runtime": "Node.js",
+        "database": "Prisma ORM",
+        "styling": "Shopify Polaris",
+        "buildTool": "Vite",
+        "graphql": "@shopify/api-codegen-preset"
+      },
+      "keyFiles": [
+        "app/",
+        "vite.config.ts", 
+        "remix.config.js",
+        "prisma/",
+        ".graphqlrc.ts",
+        "shopify.app.toml"
+      ],
+      "commands": {
+        "dev": "shopify app dev",
+        "build": "remix vite:build", 
+        "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+        "setup": "prisma generate && prisma migrate deploy"
+      }
+    },
+    "market-app": {
+      "name": "Market App",
+      "path": "apps/market-app/",
+      "type": "remix-shopify-app",
+      "description": "Customer-facing marketplace application built with Remix",
+      "techStack": {
+        "framework": "Remix",
+        "language": "TypeScript", 
+        "styling": "Shopify Polaris",
+        "database": "Prisma",
+        "shopifyIntegration": "@shopify/shopify-app-remix",
+        "buildTool": "Remix Vite"
+      },
+      "keyFiles": [
+        "app/",
+        "remix.config.js",
+        "extensions/",
+        "prisma/",
+        "shopify.app.toml"
+      ],
+      "extensions": [
+        "extensions/account-page/",
+        "extensions/order-admin-block/"
+      ],
+      "commands": {
+        "dev": "shopify app dev",
+        "build": "NODE_ENV=production remix build",
+        "setup": "prisma generate && prisma migrate deploy"
+      }
+    },
+    "admin-app": {
+      "name": "Admin App",
+      "path": "apps/admin-app/",
+      "type": "react-webpack-app",
+      "description": "Legacy admin interface built with React and Webpack",
+      "techStack": {
+        "framework": "React",
+        "language": "JavaScript",
+        "buildTool": "Webpack",
+        "server": "Express",
+        "graphql": "Apollo Server",
+        "database": "Sequelize + SQLite",
+        "styling": "Shopify Polaris"
+      },
+      "keyFiles": [
+        "app/",
+        "server/",
+        "webpack.config.js",
+        "server/graphql/"
+      ],
+      "commands": {
+        "dev": "nodemon --exec babel-node server/index.js --watch server/",
+        "build": "webpack --mode production",
+        "lint": "eslint --ext .js,.jsx ./"
+      }
+    },
+    "buyer-app": {
+      "name": "Buyer App", 
+      "path": "apps/buyer-app/",
+      "type": "nextjs-app",
+      "description": "Buyer-facing application built with Next.js",
+      "techStack": {
+        "framework": "Next.js",
+        "language": "JavaScript",
+        "styling": "Material-UI",
+        "graphql": "Apollo Client",
+        "buildTool": "Next.js"
+      },
+      "keyFiles": [
+        "pages/",
+        "next.config.js"
+      ],
+      "commands": {
+        "dev": "next dev",
+        "build": "next build",
+        "lint": "next lint"
+      }
+    }
+  },
+  "developmentWorkflows": {
+    "setup": {
+      "description": "Initial repository setup",
+      "steps": [
+        "npm install (in root)",
+        "npm run setup (initialize Prisma)",
+        "Set up .env files for each app",
+        "Configure Shopify app credentials"
+      ]
+    },
+    "development": {
+      "description": "Local development workflow",
+      "steps": [
+        "Start main app: npm run dev",
+        "Start specific app: cd apps/{app-name} && npm run dev", 
+        "Use Shopify CLI for app development and tunneling"
+      ]
+    },
+    "building": {
+      "description": "Build workflow for production",
+      "steps": [
+        "Root app: npm run build",
+        "Market app: cd apps/market-app && npm run build",
+        "Admin app: cd apps/admin-app && npm run build",
+        "Buyer app: cd apps/buyer-app && npm run build"
+      ]
+    },
+    "linting": {
+      "description": "Code quality and linting",
+      "steps": [
+        "Root: npm run lint",
+        "Individual apps have their own lint commands",
+        "ESLint with Remix and Shopify configurations"
+      ]
+    }
+  },
+  "shopifyIntegration": {
+    "description": "Shopify-specific patterns and integration points",
+    "appBridge": {
+      "usage": "Used in React components for seamless admin integration",
+      "patterns": ["useAppBridge", "AppBridgeProvider", "Modal", "Toast"]
+    },
+    "graphqlCodegen": {
+      "config": ".graphqlrc.ts",
+      "generates": "app/types/",
+      "purpose": "Type-safe GraphQL operations for Shopify Admin API"
+    },
+    "polaris": {
+      "designSystem": "Shopify's design system",
+      "components": "Pre-built UI components for consistent merchant experience"
+    },
+    "extensions": {
+      "types": ["app_extensions", "checkout_extensions"],
+      "buildTool": "Vite with shopify plugin",
+      "deployment": "Through Shopify CLI"
+    },
+    "webhooks": {
+      "handling": "Remix action functions",
+      "authentication": "@shopify/shopify-app-remix"
+    }
+  },
+  "commonPatterns": {
+    "dataFetching": {
+      "pattern": "Remix loaders with Shopify API calls",
+      "example": "export async function loader({ request }) { ... }"
+    },
+    "mutations": {
+      "pattern": "Remix actions with GraphQL mutations", 
+      "example": "export async function action({ request }) { ... }"
+    },
+    "authentication": {
+      "pattern": "Shopify OAuth flow with session storage",
+      "implementation": "@shopify/shopify-app-session-storage-prisma"
+    },
+    "errorHandling": {
+      "pattern": "Remix ErrorBoundary components",
+      "shopifyErrors": "Handle Shopify API rate limits and errors"
+    }
+  },
+  "fileStructure": {
+    "root": {
+      "app/": "Main Remix application code",
+      "prisma/": "Database schema and migrations",
+      "public/": "Static assets",
+      "apps/": "Sub-applications",
+      "extensions/": "Shopify app extensions",
+      "docs/": "Documentation"
+    },
+    "remixApp": {
+      "app/routes/": "File-based routing",
+      "app/components/": "Reusable React components",
+      "app/lib/": "Utility functions and configurations",
+      "app/types/": "Generated GraphQL types"
+    }
+  },
+  "tooling": {
+    "packageManager": "npm",
+    "nodeVersion": "^18.20 || ^20.10 || >=21.0.0",
+    "typescript": "Configured for strict mode",
+    "linting": "ESLint with Remix and Shopify presets",
+    "formatting": "Prettier",
+    "database": "Prisma with migrations",
+    "deployment": "Shopify CLI and various cloud providers"
+  },
+  "codegeneration": {
+    "graphql": {
+      "command": "npm run graphql-codegen",
+      "config": ".graphqlrc.ts",
+      "output": "app/types/",
+      "purpose": "Generate TypeScript types from Shopify GraphQL schema"
+    },
+    "prisma": {
+      "command": "npx prisma generate", 
+      "purpose": "Generate Prisma client from schema"
+    }
+  },
+  "testingStrategy": {
+    "framework": "Jest (configured in some apps)",
+    "patterns": [
+      "Unit tests for utility functions",
+      "Integration tests for Shopify API calls",
+      "Component testing with React Testing Library"
+    ]
+  },
+  "deploymentTargets": {
+    "production": ["Heroku", "Fly.io", "Vercel"],
+    "requirements": [
+      "NODE_ENV=production",
+      "Shopify app credentials",
+      "Database connection",
+      "Session storage configuration"
+    ]
+  },
+  "troubleshooting": {
+    "commonIssues": [
+      {
+        "issue": "Shopify CLI authentication",
+        "solution": "Run 'shopify auth login' and ensure proper scopes"
+      },
+      {
+        "issue": "GraphQL type generation",
+        "solution": "Run 'npm run graphql-codegen' after schema changes"
+      },
+      {
+        "issue": "Prisma client out of sync",
+        "solution": "Run 'npx prisma generate' after schema changes"
+      },
+      {
+        "issue": "Vite version conflicts",
+        "solution": "Check package.json resolutions and overrides"
+      }
+    ]
+  },
+  "agentGuidance": {
+    "codeModification": {
+      "principles": [
+        "Preserve existing Shopify integration patterns",
+        "Maintain TypeScript strict mode compliance",
+        "Follow Remix conventions for routing and data loading",
+        "Use Shopify Polaris components for UI consistency",
+        "Respect monorepo app boundaries"
+      ]
+    },
+    "whenAddingFeatures": [
+      "Consider which app the feature belongs in",
+      "Use appropriate tech stack for the target app",
+      "Follow existing patterns for data fetching and mutations",
+      "Ensure proper error handling and loading states",
+      "Update GraphQL types if schema changes"
+    ],
+    "debugging": [
+      "Check Shopify CLI logs for app-specific issues",
+      "Verify GraphQL operations in Shopify GraphiQL",
+      "Use browser dev tools for App Bridge debugging",
+      "Check network tab for API call failures"
+    ]
+  }
+}

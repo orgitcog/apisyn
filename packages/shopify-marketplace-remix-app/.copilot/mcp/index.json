@@ -1,0 +1,154 @@
+{
+  "name": "MCP Configuration Index",
+  "version": "1.0.0",
+  "description": "Main index for the Shopify Marketplace Remix App MCP configuration suite",
+  "lastUpdated": "2024-09-09",
+  "configurationFiles": {
+    "primary": {
+      "copilot-config.json": {
+        "purpose": "Main repository and application configuration",
+        "contains": [
+          "Repository structure and architecture",
+          "Application-specific tech stacks",
+          "Development workflows",
+          "Shopify integration patterns",
+          "Agent guidance and principles"
+        ]
+      },
+      "tools-config.json": {
+        "purpose": "Tool-specific configurations and commands",
+        "contains": [
+          "ESLint and Prettier setup",
+          "Build tool configurations (Vite, Webpack, Next.js)",
+          "Database operations (Prisma, Sequelize)", 
+          "GraphQL code generation",
+          "Shopify CLI usage",
+          "Testing strategies",
+          "Deployment configurations"
+        ]
+      },
+      "patterns.json": {
+        "purpose": "Common patterns and best practices",
+        "contains": [
+          "Remix routing and data loading patterns",
+          "Shopify API integration patterns",
+          "Polaris UI component usage",
+          "App Bridge implementation",
+          "Extension development patterns",
+          "State management approaches",
+          "Performance and security guidelines"
+        ]
+      },
+      "quick-reference.json": {
+        "purpose": "Quick reference for common tasks",
+        "contains": [
+          "Essential commands and shortcuts",
+          "File location mappings",
+          "Environment variable requirements",
+          "Code snippets for common tasks",
+          "Troubleshooting quick fixes"
+        ]
+      },
+      "troubleshooting.json": {
+        "purpose": "Comprehensive troubleshooting guide",
+        "contains": [
+          "Dependency and version conflicts",
+          "Build and development issues",
+          "Shopify-specific problems",
+          "Performance optimization",
+          "Debugging strategies"
+        ]
+      }
+    },
+    "documentation": {
+      "README.md": {
+        "purpose": "Human-readable overview and usage guide",
+        "audience": "Developers and coding agents"
+      }
+    },
+    "legacy": {
+      "import-apps.json": {
+        "purpose": "Historical reference for app import process",
+        "status": "Archived - used for initial monorepo setup"
+      }
+    }
+  },
+  "repositoryMetadata": {
+    "type": "Shopify Marketplace Monorepo",
+    "primaryTechnologies": [
+      "Remix",
+      "TypeScript", 
+      "Shopify APIs",
+      "Prisma",
+      "GraphQL",
+      "Polaris"
+    ],
+    "applications": {
+      "count": 4,
+      "types": [
+        "Remix (main app)",
+        "Remix (market-app)",
+        "React/Webpack (admin-app)",
+        "Next.js (buyer-app)"
+      ]
+    },
+    "complexity": "High - Multi-app architecture with different tech stacks"
+  },
+  "usageGuidance": {
+    "forCodingAgents": [
+      "Start with copilot-config.json for repository overview",
+      "Use patterns.json for implementation guidance",
+      "Reference quick-reference.json for immediate tasks",
+      "Consult troubleshooting.json when issues arise",
+      "Check tools-config.json for specific tool usage"
+    ],
+    "forDevelopers": [
+      "Read README.md for overview",
+      "Use quick-reference.json for common commands",
+      "Follow patterns in patterns.json for consistency",
+      "Reference troubleshooting.json for issue resolution"
+    ]
+  },
+  "validationChecks": {
+    "configurationCompleteness": [
+      "All applications documented",
+      "Tech stacks accurately described",
+      "Commands tested and verified",
+      "Patterns reflect current codebase"
+    ],
+    "accuracy": [
+      "File paths are correct",
+      "Commands work in current environment",
+      "Dependencies match package.json files",
+      "Shopify integration patterns are current"
+    ]
+  },
+  "maintenanceInstructions": {
+    "whenToUpdate": [
+      "Adding new applications to monorepo",
+      "Changing tech stacks or major dependencies",
+      "Updating Shopify integration patterns",
+      "Adding new development workflows"
+    ],
+    "howToValidate": [
+      "Test all commands in quick-reference.json",
+      "Verify build processes work",
+      "Check that patterns match current codebase",
+      "Ensure troubleshooting guides are accurate"
+    ]
+  },
+  "integrationNotes": {
+    "mcpSystem": [
+      "Designed for optimal coding agent assistance",
+      "Provides hierarchical information structure",
+      "Includes both high-level and detailed guidance",
+      "Covers development, patterns, and troubleshooting"
+    ],
+    "shopifyEcosystem": [
+      "Follows Shopify development best practices",
+      "Incorporates latest Shopify CLI patterns",
+      "Includes Polaris design system guidance",
+      "Covers App Bridge integration thoroughly"
+    ]
+  }
+}

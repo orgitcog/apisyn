@@ -1,0 +1,190 @@
+{
+  "name": "Development Tools Configuration",
+  "description": "Tool-specific configurations and commands for optimal development experience",
+  "linting": {
+    "eslint": {
+      "configFiles": [
+        ".eslintrc.cjs (root)",
+        "apps/market-app/.eslintrc",
+        "apps/admin-app/.eslintrc.js", 
+        "apps/buyer-app/.eslintrc.json"
+      ],
+      "extends": [
+        "@remix-run/eslint-config",
+        "@remix-run/eslint-config/node",
+        "@remix-run/eslint-config/jest-testing-library",
+        "prettier"
+      ],
+      "commands": {
+        "root": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+        "fix": "eslint --fix --cache --cache-location ./node_modules/.cache/eslint .",
+        "specific-app": "cd apps/{app-name} && npm run lint"
+      }
+    },
+    "prettier": {
+      "configFiles": [
+        ".prettierignore",
+        "apps/admin-app/.prettierrc"
+      ],
+      "command": "prettier --write .",
+      "integration": "Works with ESLint via eslint-config-prettier"
+    }
+  },
+  "building": {
+    "vite": {
+      "apps": ["root", "apps/market-app"],
+      "config": "vite.config.ts",
+      "features": [
+        "Remix plugin", 
+        "TypeScript paths",
+        "Shopify-specific HMR configuration"
+      ],
+      "commands": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "preview": "vite preview"
+      }
+    },
+    "webpack": {
+      "apps": ["apps/admin-app"],
+      "config": "apps/admin-app/webpack.config.js",
+      "features": [
+        "Hot Module Replacement",
+        "Babel transformation",
+        "React Hot Loader"
+      ]
+    },
+    "next": {
+      "apps": ["apps/buyer-app"],
+      "config": "apps/buyer-app/next.config.js",
+      "features": ["Built-in optimization", "SSR support"]
+    }
+  },
+  "database": {
+    "prisma": {
+      "schema": "prisma/schema.prisma",
+      "commands": {
+        "generate": "prisma generate",
+        "migrate": "prisma migrate dev",
+        "deploy": "prisma migrate deploy",
+        "studio": "prisma studio",
+        "reset": "prisma migrate reset"
+      },
+      "workflows": {
+        "schemaChange": [
+          "Edit prisma/schema.prisma",
+          "Run prisma migrate dev --name {description}",
+          "Run prisma generate",
+          "Update TypeScript types if needed"
+        ]
+      }
+    },
+    "sequelize": {
+      "apps": ["apps/admin-app"],
+      "usage": "Legacy database ORM in admin app",
+      "commands": {
+        "migrate": "npx sequelize-cli db:migrate",
+        "seed": "npx sequelize-cli db:seed:all"
+      }
+    }
+  },
+  "graphql": {
+    "codegen": {
+      "config": ".graphqlrc.ts",
+      "command": "graphql-codegen",
+      "output": "app/types/",
+      "workflow": [
+        "Make GraphQL query changes",
+        "Run npm run graphql-codegen", 
+        "Import generated types in TypeScript"
+      ]
+    },
+    "apollo": {
+      "apps": ["apps/admin-app", "apps/buyer-app"],
+      "usage": "GraphQL client and server setup"
+    }
+  },
+  "shopify": {
+    "cli": {
+      "version": "Latest via @shopify/cli",
+      "commands": {
+        "dev": "shopify app dev",
+        "generate": "shopify app generate",
+        "deploy": "shopify app deploy",
+        "config": "shopify app config {link|push|use}",
+        "auth": "shopify auth login"
+      },
+      "configuration": [
+        "shopify.app.toml",
+        "shopify.web.toml",
+        "shopify.extension.toml (for extensions)"
+      ]
+    },
+    "appBridge": {
+      "usage": "Embedded app integration",
+      "patterns": [
+        "Provider setup in _app or root",
+        "Hook usage: useAppBridge, useAuthenticatedFetch",
+        "Modal and Toast components"
+      ]
+    }
+  },
+  "testing": {
+    "jest": {
+      "apps": ["apps/admin-app"],
+      "config": "package.json babel section",
+      "patterns": [
+        "Unit tests for utilities",
+        "Integration tests for API calls",
+        "Mock Shopify API responses"
+      ]
+    },
+    "strategies": {
+      "remix": "Use Remix testing utilities for loader/action testing",
+      "react": "React Testing Library for component testing",
+      "e2e": "Consider Playwright for end-to-end testing"
+    }
+  },
+  "deployment": {
+    "env": {
+      "required": [
+        "NODE_ENV=production",
+        "SHOPIFY_API_KEY",
+        "SHOPIFY_API_SECRET", 
+        "SCOPES",
+        "DATABASE_URL"
+      ],
+      "optional": [
+        "SHOPIFY_APP_URL",
+        "FRONTEND_PORT",
+        "HOST"
+      ]
+    },
+    "platforms": {
+      "heroku": {
+        "requirements": ["Procfile", "node_modules build"],
+        "env": "Set via Heroku dashboard or CLI"
+      },
+      "vercel": {
+        "config": "Use @vercel/remix preset",
+        "import": "Change @remix-run/node to @vercel/remix"
+      },
+      "fly": {
+        "config": "Dockerfile included",
+        "command": "fly deploy"
+      }
+    }
+  },
+  "monitoring": {
+    "logs": {
+      "shopify": "shopify app logs",
+      "local": "Console output from dev servers",
+      "production": "Platform-specific logging (Heroku, Vercel, etc.)"
+    },
+    "debugging": {
+      "remix": "Use Remix dev tools and error boundaries",
+      "shopify": "GraphiQL explorer and webhook testing",
+      "network": "Browser dev tools for API inspection"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Multivendor Shop"
+client_id = "36721b0a5b6c24a485ba96e52adc57b7"
+application_url = "https://impala-top-visually.ngrok-free.app"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_product_listings,unauthenticated_read_product_listings,write_products,read_products,read_metaobjects,write_metaobjects,read_metaobject_definitions,write_metaobject_definitions,write_customers,read_orders,write_orders,write_files,write_themes,read_publications,write_publications,write_assigned_fulfillment_orders,read_merchant_managed_fulfillment_orders,write_merchant_managed_fulfillment_orders"
+use_legacy_install_flow = true
+
+[auth]
+redirect_urls = [
+  "https://impala-top-visually.ngrok-free.app/auth/callback",
+  "https://impala-top-visually.ngrok-free.app/auth/shopify/callback",
+  "https://impala-top-visually.ngrok-free.app/api/auth/callback",
+  "https://impala-top-visually.ngrok-free.app/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+  [webhooks.privacy_compliance]
+  customer_deletion_url = "${GDPR_CUSTOMER_DELETION_URL}"
+  customer_data_request_url = "${GDPR_CUSTOMER_DATA_REQUEST_URL}"
+  shop_deletion_url = "${GDPR_SHOP_DELETION_URL}"
+
+[app_proxy]
+url = "${APP_PROXY_URL}"
+subpath = "frontend"
+prefix = "apps"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+# dev_store_url should be set via environment variable or local override, not committed to version control

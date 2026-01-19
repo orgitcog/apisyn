@@ -1,0 +1,150 @@
+{
+  "name": "Quick Reference Guide",
+  "description": "Fast reference for common tasks and commands in the Shopify marketplace monorepo",
+  "quickStart": {
+    "newDeveloper": [
+      "1. Clone repository",
+      "2. npm install (in root)",
+      "3. Copy .env.example to .env and configure",
+      "4. npm run setup (Prisma setup)",
+      "5. shopify auth login",
+      "6. npm run dev"
+    ],
+    "newFeature": [
+      "1. Identify target app (root, market-app, admin-app, buyer-app)",
+      "2. cd to appropriate directory",
+      "3. Follow app-specific patterns",
+      "4. Test locally",
+      "5. Run linting and type checking",
+      "6. Create PR"
+    ]
+  },
+  "commands": {
+    "development": {
+      "start": "npm run dev",
+      "startSpecificApp": "cd apps/{app} && npm run dev",
+      "setup": "npm run setup",
+      "tunnel": "Automatic with shopify app dev"
+    },
+    "building": {
+      "buildAll": "npm run build",
+      "buildApp": "cd apps/{app} && npm run build",
+      "typeCheck": "tsc --noEmit"
+    },
+    "database": {
+      "migrate": "npx prisma migrate dev",
+      "generate": "npx prisma generate", 
+      "studio": "npx prisma studio",
+      "reset": "npx prisma migrate reset"
+    },
+    "graphql": {
+      "codegen": "npm run graphql-codegen",
+      "introspect": "Use GraphiQL in Shopify admin"
+    },
+    "quality": {
+      "lint": "npm run lint",
+      "lintFix": "npm run lint -- --fix",
+      "format": "prettier --write .",
+      "typeCheck": "tsc --noEmit"
+    },
+    "shopify": {
+      "login": "shopify auth login",
+      "deploy": "shopify app deploy",
+      "generate": "shopify app generate",
+      "logs": "shopify app logs"
+    }
+  },
+  "fileLocations": {
+    "configs": {
+      "typescript": "tsconfig.json",
+      "eslint": ".eslintrc.cjs",
+      "prettier": ".prettierignore",
+      "vite": "vite.config.ts",
+      "remix": "remix.config.js (apps/market-app)",
+      "webpack": "apps/admin-app/webpack.config.js",
+      "next": "apps/buyer-app/next.config.js",
+      "shopify": "shopify.app.toml, shopify.web.toml"
+    },
+    "important": {
+      "mainApp": "app/",
+      "routes": "app/routes/",
+      "components": "app/components/",
+      "database": "prisma/schema.prisma",
+      "types": "app/types/",
+      "graphql": ".graphqlrc.ts"
+    }
+  },
+  "troubleshooting": {
+    "buildErrors": {
+      "viteConflict": "Check package.json resolutions for Vite version",
+      "typeErrors": "Run npm run graphql-codegen and npx prisma generate",
+      "moduleNotFound": "Check import paths and TypeScript configuration"
+    },
+    "shopifyErrors": {
+      "authFailed": "Run shopify auth login",
+      "scopeError": "Check SCOPES in .env file",
+      "webhookError": "Verify HMAC and webhook URL",
+      "rateLimited": "Implement proper rate limiting and retries"
+    },
+    "devServer": {
+      "portInUse": "Check if another dev server is running",
+      "hmrNotWorking": "Restart dev server, check network configuration",
+      "slowBuild": "Clear cache: rm -rf node_modules/.cache"
+    }
+  },
+  "envVariables": {
+    "required": [
+      "SHOPIFY_API_KEY",
+      "SHOPIFY_API_SECRET",
+      "SCOPES",
+      "DATABASE_URL"
+    ],
+    "optional": [
+      "SHOPIFY_APP_URL",
+      "HOST",
+      "FRONTEND_PORT",
+      "NODE_ENV"
+    ],
+    "development": [
+      "DATABASE_URL=file:./dev.sqlite",
+      "SCOPES=read_products,write_products"
+    ]
+  },
+  "codeSnippets": {
+    "remixLoader": "export async function loader({ request }: LoaderFunctionArgs) {\n  const { admin, session } = await authenticate.admin(request);\n  // Fetch data\n  return json({ data });\n}",
+    "remixAction": "export async function action({ request }: ActionFunctionArgs) {\n  const { admin, session } = await authenticate.admin(request);\n  const formData = await request.formData();\n  // Handle mutation\n  return redirect('/success');\n}",
+    "shopifyGraphQL": "const response = await admin.graphql(`\n  query getProducts($first: Int!) {\n    products(first: $first) {\n      nodes { id title }\n    }\n  }\n`, { variables: { first: 10 } });",
+    "polarisPage": "<Page title='Products' primaryAction={{ content: 'Add product', url: '/products/new' }}>\n  <Layout>\n    <Layout.Section>\n      {/* Content */}\n    </Layout.Section>\n  </Layout>\n</Page>",
+    "appBridgeToast": "const shopify = useAppBridge();\nshopify.toast.show('Product saved!');"
+  },
+  "shortcuts": {
+    "vscode": {
+      "snippets": "Configure TypeScript React snippets",
+      "extensions": [
+        "Shopify Liquid",
+        "GraphQL",
+        "Prisma",
+        "ESLint",
+        "Prettier"
+      ]
+    },
+    "cli": {
+      "aliases": "Consider aliasing 'shopify app dev' to 'sad'",
+      "scripts": "Add custom npm scripts for common workflows"
+    }
+  },
+  "resources": {
+    "documentation": [
+      "https://remix.run/docs",
+      "https://shopify.dev/docs/apps",
+      "https://polaris.shopify.com/",
+      "https://shopify.dev/docs/api/admin-graphql"
+    ],
+    "tools": [
+      "Shopify GraphiQL explorer",
+      "Prisma Studio for database",
+      "React DevTools",
+      "Remix DevTools"
+    ]
+  }
+}

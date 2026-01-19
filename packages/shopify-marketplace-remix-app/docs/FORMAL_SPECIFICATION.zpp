@@ -1,0 +1,864 @@
+(*==========================================================================
+  SHOPIFY MARKETPLACE REMIX APP - FORMAL SPECIFICATION IN Z++
+  
+  This document provides a formal specification of the Shopify Marketplace
+  application using Z++ notation. The specification defines the system state,
+  operations, invariants, and constraints.
+  
+  Version: 1.0
+  Date: 2025-10-18
+  ==========================================================================*)
+
+(*--------------------------------------------------------------------------
+  SECTION 1: BASIC TYPES AND CONSTANTS
+  --------------------------------------------------------------------------*)
+
+[SHOP_ID, USER_ID, PRODUCT_ID, ORDER_ID, VENDOR_ID, SESSION_ID]
+  (* Primitive types representing unique identifiers *)
+
+[EMAIL_ADDRESS, URL, TIMESTAMP, CURRENCY_CODE]
+  (* Specialized types for data representation *)
+
+STATUS ::= pending | approved | rejected | active | inactive | archived
+  (* Generic status enumeration *)
+
+VENDOR_STATUS ::= vendor_pending | vendor_approved | vendor_rejected | vendor_suspended
+  (* Vendor-specific status values *)
+
+PRODUCT_STATUS ::= product_draft | product_pending_review | product_approved | 
+                   product_published | product_archived
+  (* Product lifecycle states *)
+
+ORDER_STATUS ::= order_created | order_processing | order_shipped | 
+                 order_delivered | order_cancelled | order_refunded
+  (* Order processing states *)
+
+APPROVAL_MODE ::= auto_approval | manual_approval
+  (* Product approval workflow modes *)
+
+USER_ROLE ::= admin | vendor | customer | guest
+  (* User role types *)
+
+(*--------------------------------------------------------------------------
+  SECTION 2: BASIC SCHEMA DEFINITIONS
+  --------------------------------------------------------------------------*)
+
+[* Vendor Information Schema *]
+class Vendor
+  vendorId: VENDOR_ID
+  shopId: SHOP_ID
+  name: STRING
+  email: EMAIL_ADDRESS
+  status: VENDOR_STATUS
+  createdAt: TIMESTAMP
+  approvedAt: TIMESTAMP option
+  revenue: ℕ
+  commissionRate: 0..100
+  
+  (* Invariants *)
+  inv: 0 ≤ commissionRate ≤ 100
+  inv: status = vendor_approved ⇒ approvedAt ≠ null
+end
+
+[* Product Information Schema *]
+class Product
+  productId: PRODUCT_ID
+  vendorId: VENDOR_ID
+  shopId: SHOP_ID
+  title: STRING
+  description: STRING
+  price: ℕ
+  quantity: ℕ
+  status: PRODUCT_STATUS
+  imageUrls: seq URL
+  createdAt: TIMESTAMP
+  publishedAt: TIMESTAMP option
+  
+  (* Invariants *)
+  inv: price ≥ 0
+  inv: quantity ≥ 0
+  inv: status = product_published ⇒ publishedAt ≠ null
+  inv: #imageUrls ≤ 10  (* Maximum 10 images per product *)
+end
+
+[* Order Information Schema *]
+class Order
+  orderId: ORDER_ID
+  shopId: SHOP_ID
+  customerId: USER_ID
+  vendorOrders: seq VendorOrder
+  totalAmount: ℕ
+  status: ORDER_STATUS
+  createdAt: TIMESTAMP
+  completedAt: TIMESTAMP option
+  
+  (* Invariants *)
+  inv: totalAmount = sum({vo: VendorOrder | vo ∈ vendorOrders • vo.subtotal})
+  inv: #vendorOrders ≥ 1
+  inv: status = order_delivered ⇒ completedAt ≠ null
+end
+
+[* Vendor Order Component Schema *]
+class VendorOrder
+  vendorId: VENDOR_ID
+  products: seq OrderProduct
+  subtotal: ℕ
+  commission: ℕ
+  vendorPayout: ℕ
+  
+  (* Invariants *)
+  inv: subtotal = sum({p: OrderProduct | p ∈ products • p.price * p.quantity})
+  inv: vendorPayout = subtotal - commission
+  inv: commission ≥ 0 ∧ commission ≤ subtotal
+end
+
+[* Order Product Schema *]
+class OrderProduct
+  productId: PRODUCT_ID
+  quantity: ℕ
+  price: ℕ
+  
+  inv: quantity > 0
+  inv: price ≥ 0
+end
+
+[* Session Information Schema *]
+class Session
+  sessionId: SESSION_ID
+  shop: SHOP_ID
+  state: STRING
+  isOnline: 𝔹
+  scope: STRING option
+  accessToken: STRING
+  userId: USER_ID option
+  email: EMAIL_ADDRESS option
+  expires: TIMESTAMP option
+  accountOwner: 𝔹
+  
+  (* Invariants *)
+  inv: accountOwner = true ⇒ userId ≠ null
+  inv: isOnline = true ⇒ expires ≠ null
+end
+
+[* Metaobject Schema (Shopify Native Storage) *]
+class Metaobject
+  metaobjectId: STRING
+  type: STRING
+  fields: STRING ⇸ STRING  (* Partial function from field name to value *)
+  
+  inv: type ∈ {"vendor_info", "product_metadata", "marketplace_config"}
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 3: SYSTEM STATE SCHEMA
+  --------------------------------------------------------------------------*)
+
+class MarketplaceState
+  vendors: VENDOR_ID ⇸ Vendor
+  products: PRODUCT_ID ⇸ Product
+  orders: ORDER_ID ⇸ Order
+  sessions: SESSION_ID ⇸ Session
+  metaobjects: STRING ⇸ Metaobject
+  
+  approvalMode: APPROVAL_MODE
+  maxVendorProducts: ℕ
+  minCommissionRate: 0..100
+  maxCommissionRate: 0..100
+  
+  (* Global Invariants *)
+  inv: dom vendors = {v: Vendor | v ∈ ran vendors • v.vendorId}
+  inv: dom products = {p: Product | p ∈ ran products • p.productId}
+  inv: dom orders = {o: Order | o ∈ ran orders • o.orderId}
+  inv: dom sessions = {s: Session | s ∈ ran sessions • s.sessionId}
+  
+  (* Product-Vendor relationship invariant *)
+  inv: ∀ p: Product | p ∈ ran products • p.vendorId ∈ dom vendors
+  
+  (* Order-Product relationship invariant *)
+  inv: ∀ o: Order | o ∈ ran orders •
+         ∀ vo: VendorOrder | vo ∈ o.vendorOrders •
+           ∀ op: OrderProduct | op ∈ vo.products •
+             op.productId ∈ dom products
+  
+  (* Commission rate bounds *)
+  inv: minCommissionRate ≤ maxCommissionRate
+  inv: ∀ v: Vendor | v ∈ ran vendors •
+         minCommissionRate ≤ v.commissionRate ≤ maxCommissionRate
+  
+  (* Vendor product limits *)
+  inv: ∀ v: Vendor | v ∈ ran vendors •
+         #{p: Product | p ∈ ran products ∧ p.vendorId = v.vendorId} ≤ maxVendorProducts
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 4: INITIALIZATION SCHEMA
+  --------------------------------------------------------------------------*)
+
+class InitMarketplace
+  extends MarketplaceState
+  
+  where
+    vendors = ∅
+    products = ∅
+    orders = ∅
+    sessions = ∅
+    metaobjects = ∅
+    approvalMode = manual_approval
+    maxVendorProducts = 1000
+    minCommissionRate = 5
+    maxCommissionRate = 30
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 5: OPERATION SCHEMAS - VENDOR MANAGEMENT
+  --------------------------------------------------------------------------*)
+
+[* Register New Vendor *]
+class RegisterVendor
+  extends MarketplaceState
+  
+  inputs:
+    newVendor?: Vendor
+  
+  outputs:
+    result!: STRING
+    vendorId!: VENDOR_ID
+  
+  pre:
+    newVendor?.vendorId ∉ dom vendors
+    newVendor?.status = vendor_pending
+    minCommissionRate ≤ newVendor?.commissionRate ≤ maxCommissionRate
+  
+  post:
+    vendors' = vendors ⊕ {newVendor?.vendorId ↦ newVendor?}
+    result! = "Vendor registered successfully"
+    vendorId! = newVendor?.vendorId
+    products' = products
+    orders' = orders
+    sessions' = sessions
+end
+
+[* Approve Vendor *]
+class ApproveVendor
+  extends MarketplaceState
+  
+  inputs:
+    vendorId?: VENDOR_ID
+    approvalTime?: TIMESTAMP
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    vendorId? ∈ dom vendors
+    vendors(vendorId?).status = vendor_pending
+  
+  post:
+    let v = vendors(vendorId?) in
+      vendors' = vendors ⊕ {vendorId? ↦ v[status := vendor_approved, 
+                                          approvedAt := approvalTime?]}
+    end
+    result! = "Vendor approved successfully"
+    products' = products
+    orders' = orders
+end
+
+[* Suspend Vendor *]
+class SuspendVendor
+  extends MarketplaceState
+  
+  inputs:
+    vendorId?: VENDOR_ID
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    vendorId? ∈ dom vendors
+    vendors(vendorId?).status ∈ {vendor_approved, vendor_pending}
+  
+  post:
+    let v = vendors(vendorId?) in
+      vendors' = vendors ⊕ {vendorId? ↦ v[status := vendor_suspended]}
+    end
+    result! = "Vendor suspended"
+    (* All vendor's products must be unpublished *)
+    products' = {pid ↦ p | pid ↦ p ∈ products ∧ 
+                 (p.vendorId = vendorId? ⇒ p.status = product_archived)}
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 6: OPERATION SCHEMAS - PRODUCT MANAGEMENT
+  --------------------------------------------------------------------------*)
+
+[* Create Product *]
+class CreateProduct
+  extends MarketplaceState
+  
+  inputs:
+    newProduct?: Product
+  
+  outputs:
+    result!: STRING
+    productId!: PRODUCT_ID
+  
+  pre:
+    newProduct?.productId ∉ dom products
+    newProduct?.vendorId ∈ dom vendors
+    vendors(newProduct?.vendorId).status = vendor_approved
+    (* Vendor has not exceeded product limit *)
+    #{p: Product | p ∈ ran products ∧ 
+      p.vendorId = newProduct?.vendorId} < maxVendorProducts
+    (* Initial status based on approval mode *)
+    (approvalMode = auto_approval ⇒ newProduct?.status = product_approved) ∧
+    (approvalMode = manual_approval ⇒ newProduct?.status = product_pending_review)
+  
+  post:
+    products' = products ⊕ {newProduct?.productId ↦ newProduct?}
+    productId! = newProduct?.productId
+    result! = if approvalMode = auto_approval then 
+                "Product created and auto-approved"
+              else
+                "Product created, pending review"
+    vendors' = vendors
+    orders' = orders
+end
+
+[* Approve Product *]
+class ApproveProduct
+  extends MarketplaceState
+  
+  inputs:
+    productId?: PRODUCT_ID
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    productId? ∈ dom products
+    products(productId?).status = product_pending_review
+  
+  post:
+    let p = products(productId?) in
+      products' = products ⊕ {productId? ↦ p[status := product_approved]}
+    end
+    result! = "Product approved"
+    vendors' = vendors
+end
+
+[* Publish Product *]
+class PublishProduct
+  extends MarketplaceState
+  
+  inputs:
+    productId?: PRODUCT_ID
+    publishTime?: TIMESTAMP
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    productId? ∈ dom products
+    products(productId?).status = product_approved
+    products(productId?).quantity > 0
+  
+  post:
+    let p = products(productId?) in
+      products' = products ⊕ {productId? ↦ p[status := product_published,
+                                             publishedAt := publishTime?]}
+    end
+    result! = "Product published"
+    vendors' = vendors
+end
+
+[* Update Product Inventory *]
+class UpdateProductInventory
+  extends MarketplaceState
+  
+  inputs:
+    productId?: PRODUCT_ID
+    newQuantity?: ℕ
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    productId? ∈ dom products
+    newQuantity? ≥ 0
+  
+  post:
+    let p = products(productId?) in
+      products' = products ⊕ {productId? ↦ p[quantity := newQuantity?]}
+    end
+    result! = "Inventory updated"
+    vendors' = vendors
+    orders' = orders
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 7: OPERATION SCHEMAS - ORDER MANAGEMENT
+  --------------------------------------------------------------------------*)
+
+[* Create Order *]
+class CreateOrder
+  extends MarketplaceState
+  
+  inputs:
+    newOrder?: Order
+  
+  outputs:
+    result!: STRING
+    orderId!: ORDER_ID
+  
+  pre:
+    newOrder?.orderId ∉ dom orders
+    (* All products must exist and be published *)
+    ∀ vo: VendorOrder | vo ∈ newOrder?.vendorOrders •
+      ∀ op: OrderProduct | op ∈ vo.products •
+        op.productId ∈ dom products ∧
+        products(op.productId).status = product_published ∧
+        products(op.productId).quantity ≥ op.quantity
+    (* Verify vendor orders *)
+    ∀ vo: VendorOrder | vo ∈ newOrder?.vendorOrders •
+      vo.vendorId ∈ dom vendors ∧
+      vendors(vo.vendorId).status = vendor_approved
+  
+  post:
+    orders' = orders ⊕ {newOrder?.orderId ↦ newOrder?}
+    (* Update product quantities *)
+    products' = {pid ↦ p | pid ↦ p ∈ products ∧
+                 (∃ vo: VendorOrder | vo ∈ newOrder?.vendorOrders •
+                  ∃ op: OrderProduct | op ∈ vo.products •
+                    op.productId = pid ⇒ 
+                      p.quantity = products(pid).quantity - op.quantity)}
+    orderId! = newOrder?.orderId
+    result! = "Order created successfully"
+    vendors' = vendors
+end
+
+[* Process Order *]
+class ProcessOrder
+  extends MarketplaceState
+  
+  inputs:
+    orderId?: ORDER_ID
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    orderId? ∈ dom orders
+    orders(orderId?).status = order_created
+  
+  post:
+    let o = orders(orderId?) in
+      orders' = orders ⊕ {orderId? ↦ o[status := order_processing]}
+    end
+    result! = "Order processing started"
+    products' = products
+    vendors' = vendors
+end
+
+[* Complete Order *]
+class CompleteOrder
+  extends MarketplaceState
+  
+  inputs:
+    orderId?: ORDER_ID
+    completionTime?: TIMESTAMP
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    orderId? ∈ dom orders
+    orders(orderId?).status = order_shipped
+  
+  post:
+    let o = orders(orderId?) in
+      orders' = orders ⊕ {orderId? ↦ o[status := order_delivered,
+                                        completedAt := completionTime?]}
+    end
+    (* Update vendor revenue *)
+    vendors' = {vid ↦ v | vid ↦ v ∈ vendors ∧
+                (∃ vo: VendorOrder | vo ∈ orders(orderId?).vendorOrders •
+                  vo.vendorId = vid ⇒ 
+                    v.revenue = vendors(vid).revenue + vo.vendorPayout)}
+    result! = "Order completed, vendor payouts calculated"
+    products' = products
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 8: OPERATION SCHEMAS - SESSION MANAGEMENT
+  --------------------------------------------------------------------------*)
+
+[* Create Session *]
+class CreateSession
+  extends MarketplaceState
+  
+  inputs:
+    newSession?: Session
+  
+  outputs:
+    result!: STRING
+    sessionId!: SESSION_ID
+  
+  pre:
+    newSession?.sessionId ∉ dom sessions
+    newSession?.shop ∈ ran(vendors⨾vendorId)
+  
+  post:
+    sessions' = sessions ⊕ {newSession?.sessionId ↦ newSession?}
+    sessionId! = newSession?.sessionId
+    result! = "Session created"
+    vendors' = vendors
+    products' = products
+    orders' = orders
+end
+
+[* Validate Session *]
+class ValidateSession
+  extends MarketplaceState
+  
+  inputs:
+    sessionId?: SESSION_ID
+    currentTime?: TIMESTAMP
+  
+  outputs:
+    isValid!: 𝔹
+    session!: Session option
+  
+  pre:
+    true  (* No preconditions *)
+  
+  post:
+    if sessionId? ∈ dom sessions then
+      let s = sessions(sessionId?) in
+        isValid! = (s.expires = null ∨ currentTime? < s.expires)
+        session! = if isValid! then s else null
+      end
+    else
+      isValid! = false
+      session! = null
+    end
+    vendors' = vendors
+    products' = products
+    orders' = orders
+    sessions' = sessions
+end
+
+[* Expire Session *]
+class ExpireSession
+  extends MarketplaceState
+  
+  inputs:
+    sessionId?: SESSION_ID
+  
+  outputs:
+    result!: STRING
+  
+  pre:
+    sessionId? ∈ dom sessions
+  
+  post:
+    sessions' = {sessionId? ⩤ sessions  (* Remove session *)
+    result! = "Session expired"
+    vendors' = vendors
+    products' = products
+    orders' = orders
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 9: COMPOSITE OPERATIONS
+  --------------------------------------------------------------------------*)
+
+[* Vendor Onboarding Complete Flow *]
+class VendorOnboardingFlow
+  comprises RegisterVendor ⨾ ApproveVendor
+  
+  (* This represents the complete vendor onboarding workflow *)
+end
+
+[* Product Publication Flow *]
+class ProductPublicationFlow
+  comprises CreateProduct ⨾ ApproveProduct ⨾ PublishProduct
+  
+  (* This represents the complete product publication workflow *)
+end
+
+[* Order Processing Flow *]
+class OrderProcessingFlow
+  comprises CreateOrder ⨾ ProcessOrder ⨾ CompleteOrder
+  
+  (* This represents the complete order processing workflow *)
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 10: QUERY OPERATIONS (READ-ONLY)
+  --------------------------------------------------------------------------*)
+
+[* Get Vendor Products *]
+class GetVendorProducts
+  extends MarketplaceState
+  
+  inputs:
+    vendorId?: VENDOR_ID
+  
+  outputs:
+    productList!: seq Product
+  
+  pre:
+    vendorId? ∈ dom vendors
+  
+  post:
+    productList! = [p: Product | p ∈ ran products ∧ p.vendorId = vendorId?]
+    (* State unchanged *)
+    vendors' = vendors
+    products' = products
+    orders' = orders
+    sessions' = sessions
+end
+
+[* Get Vendor Revenue *]
+class GetVendorRevenue
+  extends MarketplaceState
+  
+  inputs:
+    vendorId?: VENDOR_ID
+  
+  outputs:
+    totalRevenue!: ℕ
+    totalOrders!: ℕ
+  
+  pre:
+    vendorId? ∈ dom vendors
+  
+  post:
+    totalRevenue! = vendors(vendorId?).revenue
+    totalOrders! = #{o: Order | o ∈ ran orders ∧
+                     ∃ vo: VendorOrder | vo ∈ o.vendorOrders •
+                       vo.vendorId = vendorId?}
+    (* State unchanged *)
+    vendors' = vendors
+    products' = products
+    orders' = orders
+    sessions' = sessions
+end
+
+[* Get Pending Approvals *]
+class GetPendingApprovals
+  extends MarketplaceState
+  
+  outputs:
+    pendingVendors!: seq Vendor
+    pendingProducts!: seq Product
+  
+  pre:
+    true
+  
+  post:
+    pendingVendors! = [v: Vendor | v ∈ ran vendors ∧ 
+                       v.status = vendor_pending]
+    pendingProducts! = [p: Product | p ∈ ran products ∧ 
+                        p.status = product_pending_review]
+    (* State unchanged *)
+    vendors' = vendors
+    products' = products
+    orders' = orders
+    sessions' = sessions
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 11: SYSTEM-WIDE INVARIANTS AND CONSTRAINTS
+  --------------------------------------------------------------------------*)
+
+[* Global System Invariants *]
+class SystemInvariants
+  
+  (* Revenue consistency: Sum of all vendor revenues equals sum of all payouts *)
+  inv_revenue_consistency:
+    sum({v: Vendor | v ∈ ran vendors • v.revenue}) =
+    sum({o: Order | o ∈ ran orders ∧ o.status = order_delivered •
+         sum({vo: VendorOrder | vo ∈ o.vendorOrders • vo.vendorPayout})})
+  
+  (* Product availability: Published products must have positive quantity *)
+  inv_product_availability:
+    ∀ p: Product | p ∈ ran products ∧ p.status = product_published •
+      p.quantity > 0
+  
+  (* Vendor integrity: Only approved vendors can have published products *)
+  inv_vendor_integrity:
+    ∀ p: Product | p ∈ ran products ∧ p.status = product_published •
+      vendors(p.vendorId).status = vendor_approved
+  
+  (* Order integrity: All orders reference valid products and vendors *)
+  inv_order_integrity:
+    ∀ o: Order | o ∈ ran orders •
+      ∀ vo: VendorOrder | vo ∈ o.vendorOrders •
+        vo.vendorId ∈ dom vendors ∧
+        ∀ op: OrderProduct | op ∈ vo.products •
+          op.productId ∈ dom products
+  
+  (* Session validity: Non-expired sessions must have future expiry times *)
+  inv_session_validity:
+    ∀ s: Session | s ∈ ran sessions ∧ s.isOnline = true •
+      s.expires ≠ null
+  
+  (* Commission consistency: All commission rates within bounds *)
+  inv_commission_consistency:
+    ∀ v: Vendor | v ∈ ran vendors •
+      0 ≤ v.commissionRate ≤ 100
+  
+  (* No orphaned products: All products must belong to existing vendors *)
+  inv_no_orphaned_products:
+    ∀ p: Product | p ∈ ran products •
+      p.vendorId ∈ dom vendors
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 12: ERROR HANDLING SCHEMAS
+  --------------------------------------------------------------------------*)
+
+[* Error Response Schema *]
+class ErrorResponse
+  errorCode: ℕ
+  errorMessage: STRING
+  errorType: {validation_error, authorization_error, not_found, 
+              conflict, internal_error}
+  
+  inv: errorCode ∈ 400..599
+end
+
+[* Operation Error Handling *]
+class OperationError
+  inputs:
+    operation?: STRING
+    context?: STRING
+  
+  outputs:
+    error!: ErrorResponse
+  
+  post:
+    error!.errorMessage = "Operation " ⊕ operation? ⊕ " failed: " ⊕ context?
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 13: SECURITY AND AUTHORIZATION
+  --------------------------------------------------------------------------*)
+
+[* Authorization Schema *]
+class Authorization
+  userId: USER_ID
+  role: USER_ROLE
+  permissions: ℙ STRING
+  
+  inv: role = admin ⇒ 
+       permissions ⊇ {"manage_vendors", "approve_products", "view_all_orders"}
+  inv: role = vendor ⇒ 
+       permissions ⊇ {"create_product", "view_own_orders", "update_inventory"}
+  inv: role = customer ⇒ 
+       permissions ⊇ {"browse_products", "create_order", "view_own_orders"}
+end
+
+[* Authorized Operation Template *]
+class AuthorizedOperation
+  extends MarketplaceState
+  
+  inputs:
+    userId?: USER_ID
+    requiredPermission?: STRING
+  
+  outputs:
+    authorized!: 𝔹
+  
+  pre:
+    true
+  
+  post:
+    authorized! = ∃ s: Session | s ∈ ran sessions ∧ 
+                    s.userId = userId? ∧
+                    requiredPermission? ∈ getPermissions(s.userId)
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 14: PERFORMANCE AND SCALABILITY CONSTRAINTS
+  --------------------------------------------------------------------------*)
+
+[* Performance Constraints *]
+class PerformanceConstraints
+  
+  (* Maximum entities *)
+  const MAX_VENDORS: ℕ = 10000
+  const MAX_PRODUCTS_PER_VENDOR: ℕ = 1000
+  const MAX_ORDERS_PER_DAY: ℕ = 100000
+  const MAX_SESSION_DURATION: ℕ = 86400  (* 24 hours in seconds *)
+  
+  (* Response time constraints *)
+  const MAX_QUERY_TIME: ℕ = 500  (* milliseconds *)
+  const MAX_UPDATE_TIME: ℕ = 1000  (* milliseconds *)
+  
+  (* Constraints *)
+  inv: #{v: Vendor | v ∈ ran vendors} ≤ MAX_VENDORS
+  inv: ∀ v: Vendor | v ∈ ran vendors •
+         #{p: Product | p ∈ ran products ∧ p.vendorId = v.vendorId} 
+         ≤ MAX_PRODUCTS_PER_VENDOR
+end
+
+(*--------------------------------------------------------------------------
+  SECTION 15: WEBHOOK EVENT SCHEMAS
+  --------------------------------------------------------------------------*)
+
+[* Webhook Event Types *]
+WEBHOOK_EVENT ::= product_created | product_updated | order_created | 
+                  order_updated | vendor_approved | vendor_suspended
+
+[* Webhook Schema *]
+class Webhook
+  eventId: STRING
+  eventType: WEBHOOK_EVENT
+  eventData: STRING  (* JSON payload *)
+  timestamp: TIMESTAMP
+  processed: 𝔹
+  
+  inv: processed = false ⇒ timestamp ≤ currentTime()
+end
+
+[* Process Webhook Event *]
+class ProcessWebhook
+  extends MarketplaceState
+  
+  inputs:
+    webhook?: Webhook
+  
+  outputs:
+    result!: STRING
+    success!: 𝔹
+  
+  pre:
+    webhook?.processed = false
+  
+  post:
+    success! = true  (* Assume successful processing *)
+    result! = "Webhook processed: " ⊕ webhook?.eventType
+    (* State changes depend on webhook event type *)
+end
+
+(*==========================================================================
+  END OF FORMAL SPECIFICATION
+  
+  This Z++ specification provides a complete formal model of the Shopify
+  Marketplace application, including:
+  - Type definitions and enumerations
+  - State schemas for all major entities
+  - Operation schemas with pre/post conditions
+  - Global invariants and constraints
+  - Error handling and security models
+  - Performance and scalability constraints
+  
+  The specification can be used for:
+  1. Formal verification of system properties
+  2. Automated test case generation
+  3. Documentation and communication
+  4. Implementation guidance
+  5. Consistency checking
+  ==========================================================================*)

@@ -1,0 +1,49 @@
+{
+  "name": "@shopify-marketplace/partner-app-utils",
+  "version": "1.0.0",
+  "description": "Utilities and common patterns for building Shopify Partner marketplace applications",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "shopify",
+    "partner",
+    "marketplace",
+    "remix",
+    "app",
+    "utilities"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@shopify/shopify-app-remix": "^3.0.0",
+    "@remix-run/node": "^2.0.0",
+    "@prisma/client": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.1",
+    "@vitest/coverage-v8": "^4.0.16",
+    "typescript": "^5.2.2",
+    "vitest": "^4.0.16"
+  }
+}
