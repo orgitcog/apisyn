@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test outputs (keep structure, ignore generated files)
+*.log
+
+# Credentials (never commit)
+.secrets
+*.pem
+*.key
+
+# Node modules (from extracted packages)
+node_modules/
+
+# Extracted package directories (large)
+js-sdk-main/
+adk-js-main/
+workbox-7/
+next-offline-master/
+ucp-main/
+shopify-enterprise-dash-main/
+shopify-marketplace-remix-app-main/
+appqbeast-main/
+shp-zone-test-main/
+shp-zone-chan-test-main/
+zone-chan-test-suite/
+shopify-partner-api-demo-main/
+TestingandDemoforOrgParShopAPIFeatures/
+
+# Keep test results
+!reports/
+!test_framework/output/
