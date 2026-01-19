@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-01-19T14:16:12.033616",
+  "packages": [
+    {
+      "name": "@ucp-js/sdk",
+      "version": "0.1.0",
+      "path": "/home/ubuntu/api-integration-tests/js-sdk-main/js-sdk-main"
+    },
+    {
+      "name": "adk",
+      "version": "0.2.4",
+      "path": "/home/ubuntu/api-integration-tests/adk-js-main/adk-js-main"
+    },
+    {
+      "name": "shopify-enterprise-dashboard",
+      "version": "1.0.0",
+      "path": "/home/ubuntu/api-integration-tests/shopify-enterprise-dash-main/shopify-enterprise-dash-main"
+    }
+  ],
+  "status": "draft"
+}

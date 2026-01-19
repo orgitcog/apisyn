@@ -1,0 +1,332 @@
+{
+  "timestamp": "2026-01-19T14:16:12.034643",
+  "summary": {
+    "total": 25,
+    "passed": 24,
+    "failed": 1,
+    "skipped": 0,
+    "errors": 0,
+    "success_rate": 96.0
+  },
+  "suites": [
+    {
+      "name": "API Integration Tests",
+      "category": "API",
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 2.6562986373901367,
+      "tests": [
+        {
+          "name": "Shopify Partner API - Versions",
+          "status": "PASSED",
+          "duration": 1.2327561378479004,
+          "message": "Test passed",
+          "data": {
+            "versions_count": 6
+          }
+        },
+        {
+          "name": "Shopify Admin API - Shop",
+          "status": "PASSED",
+          "duration": 0.9915480613708496,
+          "message": "Test passed",
+          "data": {
+            "shop_name": "Zone-Testee",
+            "domain": "zone-teste.myshopify.com"
+          }
+        },
+        {
+          "name": "Shopify Storefront API - Shop",
+          "status": "PASSED",
+          "duration": 0.43192505836486816,
+          "message": "Test passed",
+          "data": {
+            "name": "Zone-Testee"
+          }
+        },
+        {
+          "name": "Zone Chan - Credentials",
+          "status": "PASSED",
+          "duration": 3.5762786865234375e-06,
+          "message": "Test passed",
+          "data": {
+            "client_id_valid": true,
+            "client_secret_valid": true
+          }
+        },
+        {
+          "name": "Zone Chan - HMAC",
+          "status": "PASSED",
+          "duration": 6.580352783203125e-05,
+          "message": "Test passed",
+          "data": {
+            "signature_valid": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "CLI MCP Integration Tests",
+      "category": "CLI",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 6.528319835662842,
+      "tests": [
+        {
+          "name": "Stripe MCP - Account Info",
+          "status": "PASSED",
+          "duration": 1.9741499423980713,
+          "message": "Test passed",
+          "data": {
+            "account_retrieved": true
+          }
+        },
+        {
+          "name": "Stripe MCP - Balance",
+          "status": "PASSED",
+          "duration": 0.8311553001403809,
+          "message": "Test passed",
+          "data": {
+            "balance_retrieved": true
+          }
+        },
+        {
+          "name": "Stripe MCP - Customers",
+          "status": "PASSED",
+          "duration": 0.7748191356658936,
+          "message": "Test passed",
+          "data": {
+            "customers_listed": true
+          }
+        },
+        {
+          "name": "Cloudflare MCP - Accounts",
+          "status": "PASSED",
+          "duration": 2.948195457458496,
+          "message": "Test passed",
+          "data": {
+            "accounts_listed": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "E2E CI Tests",
+      "category": "E2E",
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 5.880879640579224,
+      "tests": [
+        {
+          "name": "Shopify Product CRUD Workflow",
+          "status": "PASSED",
+          "duration": 4.85654091835022,
+          "message": "Test passed",
+          "data": {
+            "workflow": "product_crud",
+            "product_id": 9248374522093,
+            "status": "completed"
+          }
+        },
+        {
+          "name": "Partner API Transaction Workflow",
+          "status": "PASSED",
+          "duration": 1.024338722229004,
+          "message": "Test passed",
+          "data": {
+            "workflow": "partner_transactions",
+            "status": "completed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Package Unit Tests",
+      "category": "UNIT",
+      "total": 10,
+      "passed": 9,
+      "failed": 1,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 0.0012729167938232422,
+      "tests": [
+        {
+          "name": "js-sdk - Structure",
+          "status": "PASSED",
+          "duration": 0.0004191398620605469,
+          "message": "Test passed",
+          "data": {
+            "has_readme": true,
+            "has_license": true,
+            "has_config": true
+          }
+        },
+        {
+          "name": "js-sdk - Config",
+          "status": "PASSED",
+          "duration": 8.916854858398438e-05,
+          "message": "Test passed",
+          "data": {
+            "name": "@ucp-js/sdk",
+            "version": "0.1.0",
+            "has_scripts": true
+          }
+        },
+        {
+          "name": "adk-js - Structure",
+          "status": "PASSED",
+          "duration": 9.1552734375e-05,
+          "message": "Test passed",
+          "data": {
+            "has_readme": true,
+            "has_license": true,
+            "has_config": true
+          }
+        },
+        {
+          "name": "adk-js - Config",
+          "status": "PASSED",
+          "duration": 3.337860107421875e-05,
+          "message": "Test passed",
+          "data": {
+            "name": "adk",
+            "version": "0.2.4",
+            "has_scripts": true
+          }
+        },
+        {
+          "name": "workbox-7 - Structure",
+          "status": "PASSED",
+          "duration": 0.0001366138458251953,
+          "message": "Test passed",
+          "data": {
+            "has_readme": true,
+            "has_license": true,
+            "has_config": true
+          }
+        },
+        {
+          "name": "workbox-7 - Config",
+          "status": "PASSED",
+          "duration": 7.581710815429688e-05,
+          "message": "Test passed",
+          "data": {
+            "name": "workbox",
+            "version": "",
+            "has_scripts": true
+          }
+        },
+        {
+          "name": "ucp - Structure",
+          "status": "PASSED",
+          "duration": 0.00010609626770019531,
+          "message": "Test passed",
+          "data": {
+            "has_readme": true,
+            "has_license": true,
+            "has_config": true
+          }
+        },
+        {
+          "name": "ucp - Config",
+          "status": "FAILED",
+          "duration": 3.337860107421875e-05,
+          "message": "Missing 'name' field",
+          "data": {}
+        },
+        {
+          "name": "shopify-enterprise-dash - Structure",
+          "status": "PASSED",
+          "duration": 0.00023818016052246094,
+          "message": "Test passed",
+          "data": {
+            "has_readme": true,
+            "has_license": false,
+            "has_config": true
+          }
+        },
+        {
+          "name": "shopify-enterprise-dash - Config",
+          "status": "PASSED",
+          "duration": 4.9591064453125e-05,
+          "message": "Test passed",
+          "data": {
+            "name": "shopify-enterprise-dashboard",
+            "version": "1.0.0",
+            "has_scripts": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Release Build Validation",
+      "category": "RELEASE",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "duration": 0.0009801387786865234,
+      "tests": [
+        {
+          "name": "js-sdk - Build Ready",
+          "status": "PASSED",
+          "duration": 3.886222839355469e-05,
+          "message": "Test passed",
+          "data": {
+            "has_build": true,
+            "has_test": false,
+            "has_lint": false,
+            "name": "@ucp-js/sdk",
+            "version": "0.1.0"
+          }
+        },
+        {
+          "name": "adk-js - Build Ready",
+          "status": "PASSED",
+          "duration": 2.86102294921875e-05,
+          "message": "Test passed",
+          "data": {
+            "has_build": true,
+            "has_test": true,
+            "has_lint": true,
+            "name": "adk",
+            "version": "0.2.4"
+          }
+        },
+        {
+          "name": "shopify-enterprise-dash - Build Ready",
+          "status": "PASSED",
+          "duration": 4.1484832763671875e-05,
+          "message": "Test passed",
+          "data": {
+            "has_build": true,
+            "has_test": true,
+            "has_lint": true,
+            "name": "shopify-enterprise-dashboard",
+            "version": "1.0.0"
+          }
+        },
+        {
+          "name": "Release Manifest Generation",
+          "status": "PASSED",
+          "duration": 0.0008711814880371094,
+          "message": "Test passed",
+          "data": {
+            "manifest_path": "/home/ubuntu/api-integration-tests/test_framework/output/release_manifest.json",
+            "packages_count": 3
+          }
+        }
+      ]
+    }
+  ]
+}
