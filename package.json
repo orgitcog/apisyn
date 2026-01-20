@@ -1,0 +1,46 @@
+{
+  "name": "apisyn",
+  "version": "1.0.0",
+  "description": "Comprehensive API Integration Test Suite for Shopify, Stripe, and MCP Server integrations",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "python3 comprehensive_api_tests.py",
+    "test:sdk": "python3 sdk_package_tests.py",
+    "test:framework": "python3 test_framework/test_runner.py --suite all",
+    "test:api": "python3 test_framework/test_runner.py --suite api",
+    "test:cli": "python3 test_framework/test_runner.py --suite cli",
+    "test:e2e": "python3 test_framework/test_runner.py --suite e2e",
+    "test:unit": "python3 test_framework/test_runner.py --suite unit",
+    "test:release": "python3 test_framework/test_runner.py --suite release",
+    "report": "python3 generate_report.py",
+    "lint": "echo 'Linting not configured'",
+    "build": "echo 'Build complete - Python test suite ready'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orgitcog/apisyn.git"
+  },
+  "keywords": [
+    "api",
+    "integration",
+    "testing",
+    "shopify",
+    "stripe",
+    "mcp",
+    "monorepo"
+  ],
+  "author": "orgitcog",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/orgitcog/apisyn/issues"
+  },
+  "homepage": "https://github.com/orgitcog/apisyn#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {}
+}
